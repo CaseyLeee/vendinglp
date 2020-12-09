@@ -4,8 +4,8 @@ const app = getApp()
 
 Page({
   data: {
-    imgurl: "http://lyz/",
-    requrl: "http://lyz:7126/vending/",
+    imgurl: "http://192.168.0.162/",
+    requrl: "http://192.168.0.162:7126/vending/",
     // motto: 'Hello World',
     // userInfo: {},
     // hasUserInfo: false,
@@ -125,7 +125,7 @@ Page({
   onLoad: function () {
     var that=this; 
     wx.request({
-      url: 'http://lyz:7126/vending/public/device/info',
+      url: 'http://192.168.0.162:7126/vending/public/device/info',
       dataType: 'json',
       method:"GET",
       data: {

@@ -1,10 +1,32 @@
 //app.js
 App({
+  onLocalService:function(){
+    let that = this
+    // 监听服务发现事件
+    wx.onLocalServiceFound(function (obj) {
+      console.log("obj",obj)
+    
+    })
+    },
   onLaunch: function () {
   //   // 展示本地存储能力
   //   var logs = wx.getStorageSync('logs') || []
   //   logs.unshift(Date.now())
   //   wx.setStorageSync('logs', logs)
+  let that = this
+  wx.startLocalServiceDiscovery({
+    
+    // 当前手机所连的局域网下有一个 _http._tcp. 类型的服务
+    serviceType: '_http._tcp.',
+    success: function(res){
+      that.onLocalService()
+      
+    },
+    fail: console.log
+  })
+ 
+
+
 
     // 登录
     wx.login({
