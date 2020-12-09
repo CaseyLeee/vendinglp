@@ -1,0 +1,42 @@
+/* pages/index/order.wxss */
+.container{
+  margin-top: 120rpx;
+ 
+}
+.tablebody{
+  background-color: gainsboro;
+  width: 100%;
+  padding: 20rpx;
+  color: #969799;
+  font-size: 24rpx;
+  box-sizing:border-box;
+  margin-bottom: 20rpx;
+  border-radius: 20rpx;
+}
+
+.itemtop{
+ display: flex;
+width: 100%;
+justify-content: space-between;
+
+}
+.itembot{
+display: flex;
+width: 100%;
+margin-top: 20rpx;
+justify-content: space-between;
+}
+.price{ 
+  display: flex;
+align-items: center;
+}
+.status{ 
+  display: flex;
+align-items: center;
+}
+.order{
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
