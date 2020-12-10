@@ -1,38 +1,17 @@
 //app.js
 App({
-  onLocalService:function(){
-    let that = this
-    // 监听服务发现事件
-    wx.onLocalServiceFound(function (obj) {
-      console.log("obj",obj)
-    
-    })
-    },
+
   onLaunch: function () {
   //   // 展示本地存储能力
   //   var logs = wx.getStorageSync('logs') || []
   //   logs.unshift(Date.now())
   //   wx.setStorageSync('logs', logs)
-  let that = this
-  wx.startLocalServiceDiscovery({
-    
-    // 当前手机所连的局域网下有一个 _http._tcp. 类型的服务
-    serviceType: '_http._tcp.',
-    success: function(res){
-      that.onLocalService()
-      
-    },
-    fail: console.log
-  })
- 
-
-
-
+   let that=this
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-       
+      
         wx.request({
           url: 'http://lyz:7126/vending/public/cosumer/getOpenId',
           dataType: 'json',
@@ -41,8 +20,11 @@ App({
             code: res.code
           },
           success(res) {
-            if(res.code==1){
-              this.globalData.openid = res.data
+          
+            if(res.data.code==1){
+             
+              that.globalData.openid = res.data.data
+            
             }
           }
         })

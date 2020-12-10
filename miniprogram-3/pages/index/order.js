@@ -17,7 +17,7 @@ Page({
   },
   onLoad: function (options) {
     var that=this; 
-    var openid=app.globalData.userInfo.openid
+    var openid=app.globalData.openid
     console.log(openid)
     wx.request({
       url: 'http://lyz:7126/vending/public/order/query',

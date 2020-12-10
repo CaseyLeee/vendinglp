@@ -44,3 +44,4 @@
     <van-submit-bar price="{{ price}}" button-text="确认支付" bind:submit="onSubmit" />
   </van-popup>
 </view>
+<van-toast id="van-toast" />
