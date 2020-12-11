@@ -80,7 +80,7 @@ Page({
             param.unit = that.data.goodschoose.commodify.unit
             param.totalPrice = param.price * param.number
             param.comumerId = app.globalData.openid
-            param.deviceId = 'd8177d0a6f80325401b9ae4980991f40'
+            param.deviceId = '7bdfcf93b0830ee5f4b1623cdfaa4729'
             param.statusCosumer = "1"
             wx.request({
               url: that.data.requrl + 'public/order/insert',

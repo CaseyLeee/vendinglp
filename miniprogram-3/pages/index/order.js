@@ -15,6 +15,25 @@ Page({
   toinex(){
     wx.navigateBack()
   },
+  updatestatus(e){
+    let order=e.currentTarget.dataset.order
+   let  that=this
+    wx.request({
+     
+      url: 'http://www.iimiim.cn/vending/public/order/queryWeixin',
+      dataType: 'json',
+      method:"GET",
+      data: {
+        orderId: order
+      },
+      success(res) {
+       
+        if(res.data.code==1){
+          that.onLoad() 
+        }
+      }
+    })
+  },
   onLoad: function (options) {
     var that=this; 
     var openid=app.globalData.openid
