@@ -20,7 +20,8 @@ Page({
     var openid=app.globalData.openid
     console.log(openid)
     wx.request({
-      url: 'http://lyz:7126/vending/public/order/query',
+      // url: 'http://lyz:7126/vending/public/order/query',
+      url: 'http://www.iimiim.cn/vending/public/order/query',
       dataType: 'json',
       method:"POST",
       data: {
@@ -29,7 +30,9 @@ Page({
       success(res) {
        
         if(res.data.code==1){
-         
+          res.data.data.map(function(item){
+              item.status==0?item.status="删除": item.status==1?item.status="未完成": item.status==2?item.status="已支付": item.status==3?item.status="支付异常": item.status==4?item.status="已撤销": item.status==5?item.status="退款":"其他"
+          })
           that.setData({orderlist:res.data.data})
         
         }

@@ -4,8 +4,11 @@ const app = getApp()
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
   data: {
-    imgurl: "http://192.168.0.162/",
-    requrl: "http://192.168.0.162:7126/vending/",
+    // imgurl: "http://192.168.0.162/",
+    // requrl: "http://192.168.0.162:7126/vending/",
+    imgurl: "http://www.iimiim.cn/",
+    requrl: "http://www.iimiim.cn/vending/",
+
     // motto: 'Hello World',
     // userInfo: {},
     // hasUserInfo: false,
@@ -50,48 +53,7 @@ Page({
       url: '/pages/index/order'
     })
   },
-  // //事件处理函数
-  // bindViewTap: function() {
-  //   wx.navigateTo({
-  //     url: '../logs/logs'
-  //   })
-  // },
-  // onLoad: function () {
-  //   if (app.globalData.userInfo) {
-  //     this.setData({
-  //       userInfo: app.globalData.userInfo,
-  //       hasUserInfo: true
-  //     })
-  //   } else if (this.data.canIUse){
-  //     // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-  //     // 所以此处加入 callback 以防止这种情况
-  //     app.userInfoReadyCallback = res => {
-  //       this.setData({
-  //         userInfo: res.userInfo,
-  //         hasUserInfo: true
-  //       })
-  //     }
-  //   } else {
-  //     // 在没有 open-type=getUserInfo 版本的兼容处理
-  //     wx.getUserInfo({
-  //       success: res => {
-  //         app.globalData.userInfo = res.userInfo
-  //         this.setData({
-  //           userInfo: res.userInfo,
-  //           hasUserInfo: true
-  //         })
-  //       }
-  //     })
-  //   }
-  // },
-  // getUserInfo: function(e) {
-  //   console.log(e)
-  //   app.globalData.userInfo = e.detail.userInfo
-  //   this.setData({
-  //     userInfo: e.detail.userInfo,
-  //     hasUserInfo: true
-  //   })
-  // }
+  
   guid() {
     function S4() {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -173,11 +135,11 @@ Page({
   onLoad: function () {
     var that = this;
     wx.request({
-      url: 'http://192.168.0.162:7126/vending/public/device/info',
+      url: 'http://www.iimiim.cn/vending/public/device/info',
       dataType: 'json',
       method: "GET",
       data: {
-        deviceId: 'd8177d0a6f80325401b9ae4980991f40'
+        deviceId: '7bdfcf93b0830ee5f4b1623cdfaa4729'
       },
       success(res) {
 

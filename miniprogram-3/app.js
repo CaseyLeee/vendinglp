@@ -13,7 +13,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       
         wx.request({
-          url: 'http://lyz:7126/vending/public/cosumer/getOpenId',
+          url: 'http://www.iimiim.cn/vending/public/cosumer/getOpenId',
           dataType: 'json',
           method:"GET",
           data: {
