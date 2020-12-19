@@ -1,4 +1,5 @@
 // pages/index/order.js
+const time = require('../../utils/util.js')
 const app = getApp()
 Page({
 
@@ -6,54 +7,57 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderlist:[]
+    orderlist: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  toinex(){
+  toinex() {
     wx.navigateBack()
   },
-  updatestatus(e){
-    let order=e.currentTarget.dataset.order
-   let  that=this
+  updatestatus(e) {
+    let order = e.currentTarget.dataset.order
+    let that = this
     wx.request({
-     
+
       url: 'http://www.iimiim.cn/vending/public/order/queryWeixin',
       dataType: 'json',
-      method:"GET",
+      method: "GET",
       data: {
         orderId: order
       },
       success(res) {
-       
-        if(res.data.code==1){
-          that.onLoad() 
+
+        if (res.data.code == 1) {
+          that.onLoad()
         }
       }
     })
   },
   onLoad: function (options) {
-    var that=this; 
-    var openid=app.globalData.openid
-    console.log(openid)
+    var that = this;
+    var openid = app.globalData.openid
+    
     wx.request({
       // url: 'http://lyz:7126/vending/public/order/query',
       url: 'http://www.iimiim.cn/vending/public/order/query',
       dataType: 'json',
-      method:"POST",
+      method: "POST",
       data: {
         comumerId: openid
       },
       success(res) {
-       
-        if(res.data.code==1){
-          res.data.data.map(function(item){
-              item.status==0?item.status="删除": item.status==1?item.status="未完成": item.status==2?item.status="已支付": item.status==3?item.status="支付异常": item.status==4?item.status="已撤销": item.status==5?item.status="退款":"其他"
+
+        if (res.data.code == 1) {
+          res.data.data.map(function (item) {
+            item.status == 0 ? item.status = "删除" : item.status == 1 ? item.status = "未完成" : item.status == 2 ? item.status = "已支付" : item.status == 3 ? item.status = "支付异常" : item.status == 4 ? item.status = "已撤销" : item.status == 5 ? item.status = "退款" : "其他"
+            item.createTime=  time.formatTimeTwo(item.createTime, 'Y/M/D h:m:s')
           })
-          that.setData({orderlist:res.data.data})
-        
+          that.setData({
+            orderlist: res.data.data
+          })
+
         }
       }
     })

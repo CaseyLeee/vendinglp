@@ -10,7 +10,7 @@
     </view>
     <view class="itembot">
       <view class="item price">
-        <van-icon name="balance-o" size='30rpx' color="#1989fa" />金额:{{item.totalPrice}}</view>
+        <van-icon name="balance-o" size='30rpx' color="#1989fa" />金额:{{item.totalPrice/100}}元</view>
         <view class="item status">
         <van-icon name="volume-o" size='30rpx' color="#1989fa" />
         <view>{{item.status}}</view>

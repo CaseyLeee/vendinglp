@@ -28,7 +28,7 @@
       <image class="goodsimg" mode="scaleToFill" src="{{imgurl+item.commodify.pircture}}"></image>
       <text>{{item.commodify.details}}</text>
       <view class="goods_bot">
-        <text>{{item.commodify.price}}</text>
+        <text>{{item.commodify.price/100}}</text>
         <text bindtap="onSubmit" data-item="{{item}}">立即购买</text>
       </view>
     </view>

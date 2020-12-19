@@ -53,7 +53,7 @@ Page({
       url: '/pages/index/order'
     })
   },
-  
+
   guid() {
     function S4() {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -67,69 +67,64 @@ Page({
         goodschoose: e.currentTarget.dataset.item
       });
       let that = this;
-      wx.login({
-        success(res) {
-          if (res.code) {
-            //发起网络请求
-            let param = {};
-            param.orderId = that.guid()
-            param.commodifyId = that.data.goodschoose.commodifyId
-            param.commodifyName = that.data.goodschoose.commodify.name
-            param.price = that.data.goodschoose.commodify.price
-            param.number = that.data.number
-            param.unit = that.data.goodschoose.commodify.unit
-            param.totalPrice = param.price * param.number
-            param.comumerId = app.globalData.openid
-            param.deviceId = '7bdfcf93b0830ee5f4b1623cdfaa4729'
-            param.statusCosumer = "1"
-            wx.request({
-              url: that.data.requrl + 'public/order/insert',
-              data: param,
-              method: "POST",
-              success(res) {
+      var openid = app.globalData.openid
+      if (openid != "") {
+        //发起网络请求
+        let param = {};
+        param.orderId = that.guid()
+        param.commodifyId = that.data.goodschoose.commodifyId
+        param.commodifyName = that.data.goodschoose.commodify.name
+        param.price = that.data.goodschoose.commodify.price
+        param.number = that.data.number
+        param.unit = that.data.goodschoose.commodify.unit
+        param.totalPrice = param.price * param.number
+        param.comumerId = app.globalData.openid
+        param.deviceId = '7bdfcf93b0830ee5f4b1623cdfaa4729'
+        param.statusCosumer = "1"
+        wx.request({
+          url: that.data.requrl + 'public/order/insert',
+          data: param,
+          method: "POST",
+          success(res) {
 
-                if (res.data.code == 1) {
+            if (res.data.code == 1) {
 
-                  wx.requestPayment({
-                    'timeStamp': res.data.data.timeStamp.toString(),
-                    'nonceStr': res.data.data.nonceStr,
-                    'package': res.data.data._package,
-                    'signType': res.data.data.signType,
-                    'paySign': res.data.data.paySign,
-                    'success': function (res) {
-                      console.log(res)
-                    },
-                    'fail': function (res) {
-                      if (res.errMsg.indexOf("cancel") > 0) {
-                        //调用订单取消接口
-                        wx.request({
-                          url: that.data.requrl + 'public/order/cancelOrder',
-                          data: {
-                            orderId: param.orderId
-                          },
-                          method: "GET",
-                          success(res) {
+              wx.requestPayment({
+                'timeStamp': res.data.data.timeStamp.toString(),
+                'nonceStr': res.data.data.nonceStr,
+                'package': res.data.data._package,
+                'signType': res.data.data.signType,
+                'paySign': res.data.data.paySign,
+                'success': function (res) {
 
-                            if (res.data.code == 1) {
-                              Toast('取消订单成功');
-                            }
-                          }
-                        })
+                },
+                'fail': function (res) {
+                  if (res.errMsg.indexOf("cancel") > 0) {
+                    //调用订单取消接口
+                    wx.request({
+                      url: that.data.requrl + 'public/order/cancelOrder',
+                      data: {
+                        orderId: param.orderId
+                      },
+                      method: "GET",
+                      success(res) {
 
+                        if (res.data.code == 1) {
+                          Toast('取消订单成功');
+                        }
                       }
-                    },
-                    'complete': function (res) {}
-                  })
+                    })
 
-                }
-              }
-            })
+                  }
+                },
+                'complete': function (res) {}
+              })
 
-          } else {
-            console.log('登录失败！' + res.errMsg)
+            }
           }
-        }
-      })
+        })
+      }
+     
     }
   },
   onLoad: function () {
@@ -155,7 +150,7 @@ Page({
               return item.number == 8 || item.number == 7
             })
           })
-          console.log(res.data.data.containList)
+
         }
       }
     })
