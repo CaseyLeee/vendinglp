@@ -21,7 +21,7 @@ Page({
     let that = this
     wx.request({
 
-      url: 'http://www.iimiim.cn/vending/public/order/queryWeixin',
+      url: 'https://www.iimiim.cn/vending/public/order/queryWeixin',
       dataType: 'json',
       method: "GET",
       data: {
@@ -40,8 +40,8 @@ Page({
     var openid = app.globalData.openid
     
     wx.request({
-      // url: 'http://lyz:7126/vending/public/order/query',
-      url: 'http://www.iimiim.cn/vending/public/order/query',
+      // url: 'https://lyz:7126/vending/public/order/query',
+      url: 'https://www.iimiim.cn/vending/public/order/query',
       dataType: 'json',
       method: "POST",
       data: {

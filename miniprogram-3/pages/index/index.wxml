@@ -1,35 +1,40 @@
 <!--index.wxml-->
 
-<van-nav-bar title="自助购物"    style="width: 100%;position:fixed;top: 0;">
-  <van-icon name="like"  slot="left" size="60rpx"  color="#ee0a24" bindtap="toorder" />
+<van-nav-bar title="自助购物" style="width: 100%;position:fixed;top: 0;">
+  <van-icon name="like" slot="left" size="60rpx" color="#ee0a24" bindtap="toorder" />
 </van-nav-bar>
 <view class="containerindex">
 
-  <!-- <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> -->
+
   <view class="top_contain">
     <image class="banner" mode="widthFix" src="../../images/img_3.png"></image>
   </view>
-  <view class="grey">
+  <!-- <view class="grey">
     <image wx:for="{{listfix}}" wx:key="containerId" class="grey_item grey_item1" mode="scaleToFill"
       src="{{imgurl+item.commodify.pircture}}" bindtap="showPopup" data-item="{{item}}"></image>
 
+  </view> -->
+  <view class="list">
+    <view class="goods" wx:for="{{listfix}}" wx:key="containerId">
+      <image bindtap="showPopup" data-item="{{item}}" class="goodsimg" mode="scaleToFill"
+        src="{{imgurl+item.commodify.pircture}}"></image>
+      <text>{{item.commodify.name}}</text> <text
+        style="float:right">{{item.commodify.price/100}}/{{item.commodify.unit}}</text>
+      <view class="goods_bot">
+
+
+      </view>
+    </view>
   </view>
+
   <view class="list">
     <view class="goods" wx:for="{{list}}" wx:key="containerId">
-      <image class="goodsimg" mode="scaleToFill" src="{{imgurl+item.commodify.pircture}}"></image>
+      <image bindtap="onSubmit" data-item="{{item}}" class="goodsimg" mode="scaleToFill"
+        src="{{imgurl+item.commodify.pircture}}"></image>
       <text>{{item.commodify.details}}</text>
       <view class="goods_bot">
         <text>{{item.commodify.price/100}}</text>
-        <text bindtap="onSubmit" data-item="{{item}}">立即购买</text>
+        <text bindtap="onSubmit" data-item="{{item}}">{{item.available!=0?'立即购买':'无货'}}</text>
       </view>
     </view>
   </view>
@@ -41,7 +46,9 @@
         <view> {{goodschoose.commodify.unit}}</view>
       </view>
     </view>
-    <van-submit-bar price="{{ price}}" button-text="确认支付" bind:submit="onSubmit" />
+    <van-submit-bar   price="{{ price }}" button-text="确认支付"  bindtap="onSubmit"  />
   </van-popup>
 </view>
 <van-toast id="van-toast" />
+
+<van-dialog id="van-dialog" />
