@@ -1,4 +1,5 @@
 // pages/index/order.js
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 const time = require('../../utils/util.js')
 const app = getApp()
 Page({
@@ -7,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderlist: []
+    orderlist: [],
+    imgurl: "https://www.iimiim.cn/",
   },
 
   /**
@@ -15,6 +17,48 @@ Page({
    */
   toinex() {
     wx.navigateBack()
+  },
+  del(e) {
+    let order = e.currentTarget.dataset.order
+    let that = this
+    wx.request({
+
+      url: 'https://www.iimiim.cn/vending/public/order/delete',
+      dataType: 'json',
+      method: "GET",
+      data: {
+        orderId: order
+      },
+      success(res) {
+
+        if (res.data.code == 1) {
+          that.onLoad()
+        } else {
+          Toast(res.data.message);
+        }
+      }
+    })
+  },
+  use(e) {
+    let order = e.currentTarget.dataset.order
+    let that = this
+    wx.request({
+
+      url: 'https://www.iimiim.cn/vending/public/order/resend',
+      dataType: 'json',
+      method: "GET",
+      data: {
+        orderId: order
+      },
+      success(res) {
+
+        if (res.data.code == 1) {
+          that.onLoad()
+        } else {
+          Toast(res.data.message);
+        }
+      }
+    })
   },
   updatestatus(e) {
     let order = e.currentTarget.dataset.order
@@ -38,9 +82,13 @@ Page({
   onLoad: function (options) {
     var that = this;
     var openid = app.globalData.openid
-    
+    var containList = app.globalData.containList
+    var containmap = {}
+    containList.map((item) => {
+      containmap[item.commodifyId] = item
+    })
     wx.request({
-      // url: 'https://lyz:7126/vending/public/order/query',
+
       url: 'https://www.iimiim.cn/vending/public/order/query',
       dataType: 'json',
       method: "POST",
@@ -52,7 +100,8 @@ Page({
         if (res.data.code == 1) {
           res.data.data.map(function (item) {
             item.status == 0 ? item.status = "删除" : item.status == 1 ? item.status = "未完成" : item.status == 2 ? item.status = "已支付" : item.status == 3 ? item.status = "支付异常" : item.status == 4 ? item.status = "已撤销" : item.status == 5 ? item.status = "退款" : "其他"
-            item.createTime=  time.formatTimeTwo(item.createTime, 'Y/M/D h:m:s')
+            item.createTime = time.formatTimeTwo(item.createTime, 'Y/M/D h:m:s')
+            item.contain = containmap[item.commodifyId]
           })
           that.setData({
             orderlist: res.data.data

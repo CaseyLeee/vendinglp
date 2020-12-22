@@ -4,20 +4,33 @@
 <view class="container">
 
   <view class="tablebody" wx:for="{{orderlist}}" wx:key="orderId">
-    <view class="itemtop">
-      <view class="item order">订单号:{{item.orderId}}</view>
- 
+    <view>
+      <image class="pic" src="{{imgurl+item.contain.commodify.pircture}}"></image>
     </view>
-    <view class="itembot">
-      <view class="item price">
-        <van-icon name="balance-o" size='30rpx' color="#1989fa" />金额:{{item.totalPrice/100}}元</view>
+    <view class="orderdet">
+      <view class="nameitem">
+        <view class="item date">商品名称:{{item.contain.commodify.name}}</view>
+        <van-button type="primary" size="mini" type="danger" data-order="{{item.orderId}}" bindtap="del" >删除订单</van-button>
+        <van-button type="primary" size="mini" data-order="{{item.orderId}}" bindtap="use" >使用</van-button>
+      </view>
+
+      <view class="itemtop">
+
+        <view class="item price">
+          <van-icon name="balance-o" size='30rpx' color="#1989fa" />金额:{{item.totalPrice/100}}元</view>
         <view class="item status">
-        <van-icon name="volume-o" size='30rpx' color="#1989fa" />
-        <view>{{item.status}}</view>
-        <view wx:if="{{item.status=='未完成'}}" data-order='{{item.orderId}}' bindtap="updatestatus" >(点击更新状态)</view>
+          <van-icon name="volume-o" size='30rpx' color="#1989fa" />
+          <view>{{item.status}}</view>
+          <view wx:if="{{item.status=='未完成'}}" data-order='{{item.orderId}}' bindtap="updatestatus">(点击更新状态)</view>
+        </view>
+
       </view>
       <view class="item date">时间:{{item.createTime}}</view>
+      <view class="itembot">
+        <view class="item order">订单号:{{item.orderId}}</view>
+      </view>
     </view>
+
   </view>
 
 </view>

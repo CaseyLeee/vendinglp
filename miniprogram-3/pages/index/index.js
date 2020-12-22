@@ -2,19 +2,14 @@
 //获取应用实例
 const app = getApp()
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
-
-import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import Notify  from '../../miniprogram_npm/@vant/weapp/notify/notify';
 Page({
   data: {
-    // imgurl: "https://192.168.0.162/",
-    // requrl: "https://192.168.0.162:7126/vending/",
+    showdialog:false,
+    
     imgurl: "https://www.iimiim.cn/",
     requrl: "https://www.iimiim.cn/vending/",
 
-    // motto: 'Hello World',
-    // userInfo: {},
-    // hasUserInfo: false,
-    // canIUse: wx.canIUse('button.open-type.getUserInfo')
     containerState: "",
     list: [],
     listfix: [],
@@ -37,10 +32,18 @@ Page({
   showPopup(e) {
 
     let item = e.currentTarget.dataset.item
-    // if (item.number != 8) {
-    this.setData({
-      show: true
-    });
+    
+     if (item.number== 8&&item.available==0) {
+      this.setData({
+        showgoon: true
+      });
+    }
+    else{
+      this.setData({
+        show: true
+      });
+    }
+   
     this.setData({
       goodschoose: item
     });
@@ -50,9 +53,29 @@ Page({
 
 
   },
+  goorder(){
+    this.setData({
+      showgoon: false
+    });
+    wx.navigateTo({
+      url: '/pages/index/order'
+    })
+  },
+  gouse(){
+    
+    this.setData({
+      showgoon: false
+    });
+    this.setData({
+      show: true
+    });
+  },
   onClose() {
     this.setData({
       show: false
+    });
+    this.setData({
+      showgoon: false
     });
   },
   toorder() {
@@ -97,7 +120,7 @@ Page({
           param.unit = that.data.goodschoose.commodify.unit
           param.totalPrice = param.price * param.number
           param.comumerId = app.globalData.openid
-          param.deviceId = '7bdfcf93b0830ee5f4b1623cdfaa4729'
+          param.deviceId = app.globalData.deviceId
           param.statusCosumer = "1"
           wx.request({
             url: that.data.requrl + 'public/order/insert',
@@ -106,14 +129,8 @@ Page({
             success(res) {
 
               if (res.data.code == 1) {
-                if (that.data.goodschoose.number == 7 && that.data.goodschoose.typeId == 1) {
-                  Dialog.alert({
-                    title: '成功',
-                    message: '您可以使用此功能啦',
-                    theme: 'round-button',
-                  }).then(() => {
-                    // on close
-                  });
+                if (that.data.goodschoose.number == 7 && that.data.goodschoose.typeId == 1) { 
+                  Toast('支付成功,您可以使用此功能啦');
                 } else {
                   wx.requestPayment({
                     'timeStamp': res.data.data.timeStamp.toString(),
@@ -122,14 +139,8 @@ Page({
                     'signType': res.data.data.signType,
                     'paySign': res.data.data.paySign,
                     'success': function (res) {
-
-                      Dialog.alert({
-                        title: '成功',
-                        message: '支付成功,请取出商品',
-                        theme: 'round-button',
-                      }).then(() => {
-                        // on close
-                      });
+                      Toast('支付成功,请取出商品');
+                     
 
                       that.onLoad();
                     },
@@ -165,14 +176,40 @@ Page({
       }
     }
   },
+  deviceisOnline(){
+   let  deviceId=app.globalData.deviceId;
+    let that = this
+    wx.request({
+
+      url: 'https://www.iimiim.cn/vending/public/device/isOnline',
+      dataType: 'json',
+      method: "GET",
+      data: {
+        deviceId: deviceId
+      },
+      success(res) {
+
+        if (res.data.code == 1) {
+          
+        } else {
+          Notify({ type: 'danger', message: '设备不在线' ,duration: 10000,});
+        }
+      }
+    })
+  },
   onLoad: function () {
-    var that = this;
+   let  that=this
+    setInterval(() => {
+      
+      that.deviceisOnline()
+    }, 10000);
+   
     wx.request({
       url: 'https://www.iimiim.cn/vending/public/device/info',
       dataType: 'json',
       method: "GET",
       data: {
-        deviceId: '7bdfcf93b0830ee5f4b1623cdfaa4729'
+        deviceId: app.globalData.deviceId
       },
       success(res) {
 
@@ -180,22 +217,26 @@ Page({
           that.setData({
             containerState: res.data.data.containerState
           })
-
+          app.globalData.containList =  res.data.data.containList
           that.setData({
             list: res.data.data.containList.filter((item) => {
 
-              if (that.data.containerState.substring(item.number - 1, item.number) > 0 && (item.number != 8 && item.number != 7)) {
+              if (that.data.containerState.substring(item.number - 1, item.number) > 0) {
                 item.available = 1
-              } else if (item.number != 8 && item.number != 7) {
+              } else  {
                 item.available = 0
-              } else {
-                item.available = -1
               }
               return item.number != 8 && item.number != 7
             })
           })
           that.setData({
             listfix: res.data.data.containList.filter((item) => {
+              if (that.data.containerState.substring(item.number - 1, item.number) > 0) {
+                item.available = 1
+              } else  {
+                item.available = 0
+              }
+
               if (item.number == 7) {
                 item.commodify.price = 0
               }

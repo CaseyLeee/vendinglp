@@ -9,11 +9,7 @@
   <view class="top_contain">
     <image class="banner" mode="widthFix" src="../../images/img_3.png"></image>
   </view>
-  <!-- <view class="grey">
-    <image wx:for="{{listfix}}" wx:key="containerId" class="grey_item grey_item1" mode="scaleToFill"
-      src="{{imgurl+item.commodify.pircture}}" bindtap="showPopup" data-item="{{item}}"></image>
 
-  </view> -->
   <view class="list">
     <view class="goods" wx:for="{{listfix}}" wx:key="containerId">
       <image bindtap="showPopup" data-item="{{item}}" class="goodsimg" mode="scaleToFill"
@@ -22,13 +18,12 @@
         style="float:right">{{item.commodify.price/100}}/{{item.commodify.unit}}</text>
       <view class="goods_bot">
 
-
       </view>
     </view>
   </view>
 
   <view class="list">
-    <view class="goods" wx:for="{{list}}" wx:key="containerId">
+    <view wx:for="{{list}}" wx:key="containerId" class="goods,{{item.available!=0?'':'grayscale'}}">
       <image bindtap="onSubmit" data-item="{{item}}" class="goodsimg" mode="scaleToFill"
         src="{{imgurl+item.commodify.pircture}}"></image>
       <text>{{item.commodify.details}}</text>
@@ -38,7 +33,7 @@
       </view>
     </view>
   </view>
-  <van-popup show="{{ show }}" round bind:close="onClose" position="bottom" custom-style="height: 20%;">
+  <van-popup id="popup" show="{{ show }}" round bind:close="onClose" position="bottom" custom-style="height: 20%;">
     <view class="orderdesc">
       <view class="name">{{goodschoose.commodify.name}}</view>
       <view class="stepnumber">
@@ -46,9 +41,14 @@
         <view> {{goodschoose.commodify.unit}}</view>
       </view>
     </view>
-    <van-submit-bar   price="{{ price }}" button-text="确认支付"  bindtap="onSubmit"  />
+    <van-submit-bar price="{{ price }}" button-text="确认支付" bindtap="onSubmit" />
   </van-popup>
 </view>
 <van-toast id="van-toast" />
-
-<van-dialog id="van-dialog" />
+<van-popup id="popup2" show="{{ showgoon }}" bind:close="onClose">
+  <view class="dialogslot">
+    <van-button class="dialogslot-Item" type="primary"  bindtap="goorder">去订单</van-button>
+    <van-button  class="dialogslot-Item"  type="primary" bindtap="gouse">续费</van-button>
+  </view>
+</van-popup>
+<van-notify id="van-notify" />
