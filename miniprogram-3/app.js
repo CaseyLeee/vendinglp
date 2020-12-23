@@ -33,6 +33,6 @@ App({
     userInfo: null,
     openid:"",
     containList:[],
-    deviceId:'40f55091ecb93c432c9d83b1b97a581e'
+    deviceId:'100002'
   }
 })

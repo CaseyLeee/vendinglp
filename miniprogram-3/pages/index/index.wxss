@@ -38,7 +38,8 @@
 .goods{
   /* height: 400rpx; */
   width: calc(50% - 40rpx);
-  border-bottom: solid 4rpx #003399;
+  border-bottom: solid 4rpx #2498FB; 
+  /* #003399 */
   box-sizing: border-box;
   margin: 10rpx;
   padding: 10rpx;
@@ -53,7 +54,7 @@ border-radius: 20rpx;
 }
 .list{
   font-size: 26rpx;
-  color: 	#003399;
+  color: 	#2498FB;
   font-weight:600;
 }
 .goods_bot{

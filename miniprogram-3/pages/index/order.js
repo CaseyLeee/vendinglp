@@ -99,7 +99,7 @@ Page({
 
         if (res.data.code == 1) {
           res.data.data.map(function (item) {
-            item.status == 0 ? item.status = "删除" : item.status == 1 ? item.status = "未完成" : item.status == 2 ? item.status = "已支付" : item.status == 3 ? item.status = "支付异常" : item.status == 4 ? item.status = "已撤销" : item.status == 5 ? item.status = "退款" : "其他"
+            item.status == 0 ? item.status = "删除" : item.status == 1 ? item.status = "未支付" : item.status == 2 ? item.status = "已支付" : item.status == 3 ? item.status = "支付异常" : item.status == 4 ? item.status = "已撤销" : item.status == 5 ? item.status = "退款" : "其他"
             item.createTime = time.formatTimeTwo(item.createTime, 'Y/M/D h:m:s')
             item.contain = containmap[item.commodifyId]
           })

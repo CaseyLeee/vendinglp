@@ -99,7 +99,8 @@ Page({
     });
     let that = this;
     if (app.globalData.openid != null) {
-      if (that.data.goodschoose.number != 7 && that.data.goodschoose.number != 8) {
+      if (e.currentTarget.dataset.item!="to1and2") {
+        
         this.setData({
           goodschoose: e.currentTarget.dataset.item
         });
@@ -133,7 +134,7 @@ Page({
             success(res) {
 
               if (res.data.code == 1) {
-                if (that.data.goodschoose.number == 7 && that.data.goodschoose.typeId == 1) { 
+                if (that.data.goodschoose.number == 1 && that.data.goodschoose.typeId == 1) { 
                   Toast('支付成功,您可以使用此功能啦');
                 } else {
                   wx.requestPayment({
@@ -234,7 +235,7 @@ Page({
               } else  {
                 item.available = 0
               }
-              return item.number != 8 && item.number != 7
+              return item.number !=1 && item.number != 2
             })
           })
           that.setData({
@@ -245,10 +246,10 @@ Page({
                 item.available = 0
               }
 
-              if (item.number == 7) {
-                item.commodify.price = 0
-              }
-              return item.number == 8 || item.number == 7
+              // if (item.number == 1) {
+              //   item.commodify.price = 0
+              // }
+              return item.number ==1|| item.number ==2
             })
           })
 

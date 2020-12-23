@@ -21,7 +21,7 @@
         <view class="item status">
           <van-icon name="volume-o" size='30rpx' color="#1989fa" />
           <view>{{item.status}}</view>
-          <view wx:if="{{item.status=='未完成'}}" data-order='{{item.orderId}}' bindtap="updatestatus">(点击更新状态)</view>
+          <view wx:if="{{item.status=='未支付'}}" data-order='{{item.orderId}}' bindtap="updatestatus">(刷新)</view>
         </view>
 
       </view>

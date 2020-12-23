@@ -41,7 +41,7 @@
         <view> {{goodschoose.commodify.unit}}</view>
       </view>
     </view>
-    <van-submit-bar price="{{ price }}" button-text="确认支付" bindtap="onSubmit" />
+    <van-submit-bar price="{{ price }}" button-text="确认支付" data-item="to1and2" bindtap="onSubmit" />
   </van-popup>
 </view>
 <van-toast id="van-toast" />
