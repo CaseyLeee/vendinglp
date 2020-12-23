@@ -1,8 +1,5 @@
 /* pages/index/order.wxss */
-.container{
-  margin-top: 120rpx;
- 
-}
+
 .tablebody{
   display: flex;
   background-color: gainsboro;

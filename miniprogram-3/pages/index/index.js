@@ -5,6 +5,7 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify  from '../../miniprogram_npm/@vant/weapp/notify/notify';
 Page({
   data: {
+    intervalnumber:null,
     showdialog:false,
     
     imgurl: "https://www.iimiim.cn/",
@@ -57,6 +58,7 @@ Page({
     this.setData({
       showgoon: false
     });
+    
     wx.navigateTo({
       url: '/pages/index/order'
     })
@@ -79,6 +81,7 @@ Page({
     });
   },
   toorder() {
+    clearInterval(this.data.intervalnumber)
     wx.navigateTo({
       url: '/pages/index/order'
     })
@@ -104,6 +107,7 @@ Page({
 
 
       if (that.data.goodschoose.available == 0) {
+        console.log(that.data.goodschoose)
         Toast('此商品暂时无货');
 
       } else {
@@ -197,13 +201,17 @@ Page({
       }
     })
   },
+  onShow:function (options) {
+    let  that=this
+
+    if(this.data.intervalnumber==null){
+      this.data.intervalnumber=  setInterval(() => {    
+        that.deviceisOnline()
+      }, 100000);
+    }
+  },
   onLoad: function () {
-   let  that=this
-    setInterval(() => {
-      
-      that.deviceisOnline()
-    }, 10000);
-   
+    let  that=this
     wx.request({
       url: 'https://www.iimiim.cn/vending/public/device/info',
       dataType: 'json',

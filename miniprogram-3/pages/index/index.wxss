@@ -51,7 +51,7 @@
 height: 300rpx;
 border-radius: 20rpx;
 }
-text{
+.list{
   font-size: 26rpx;
   color: 	#003399;
   font-weight:600;
