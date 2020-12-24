@@ -2,12 +2,12 @@
 //获取应用实例
 const app = getApp()
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
-import Notify  from '../../miniprogram_npm/@vant/weapp/notify/notify';
+import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 Page({
   data: {
-    intervalnumber:null,
-    showdialog:false,
-    
+    intervalnumber: null,
+    showdialog: false,
+
     imgurl: "https://www.iimiim.cn/",
     requrl: "https://www.iimiim.cn/vending/",
 
@@ -33,18 +33,17 @@ Page({
   showPopup(e) {
 
     let item = e.currentTarget.dataset.item
-    
-     if (item.number== 8&&item.available==0) {
+
+    if (item.number == 8 && item.available == 0) {
       this.setData({
         showgoon: true
       });
-    }
-    else{
+    } else {
       this.setData({
         show: true
       });
     }
-   
+
     this.setData({
       goodschoose: item
     });
@@ -54,17 +53,17 @@ Page({
 
 
   },
-  goorder(){
+  goorder() {
     this.setData({
       showgoon: false
     });
-    
+
     wx.navigateTo({
       url: '/pages/index/order'
     })
   },
-  gouse(){
-    
+  gouse() {
+
     this.setData({
       showgoon: false
     });
@@ -99,8 +98,8 @@ Page({
     });
     let that = this;
     if (app.globalData.openid != null) {
-      if (e.currentTarget.dataset.item!="to1and2") {
-        
+      if (e.currentTarget.dataset.item != "to1and2") {
+
         this.setData({
           goodschoose: e.currentTarget.dataset.item
         });
@@ -134,7 +133,7 @@ Page({
             success(res) {
 
               if (res.data.code == 1) {
-                if (that.data.goodschoose.number == 1 && that.data.goodschoose.typeId == 1) { 
+                if (that.data.goodschoose.number == 1 && that.data.goodschoose.typeId == 1) {
                   Toast('支付成功,您可以使用此功能啦');
                 } else {
                   wx.requestPayment({
@@ -145,7 +144,7 @@ Page({
                     'paySign': res.data.data.paySign,
                     'success': function (res) {
                       Toast('支付成功,请取出商品');
-                     
+
 
                       that.onLoad();
                     },
@@ -171,8 +170,7 @@ Page({
                     'complete': function (res) {}
                   })
                 }
-              }
-              else{
+              } else {
                 Toast(res.data.message);
               }
             }
@@ -181,8 +179,8 @@ Page({
       }
     }
   },
-  deviceisOnline(){
-   let  deviceId=app.globalData.deviceId;
+  deviceisOnline() {
+    let deviceId = app.globalData.deviceId;
     let that = this
     wx.request({
 
@@ -195,24 +193,39 @@ Page({
       success(res) {
 
         if (res.data.code == 1) {
-          
+
         } else {
-          Notify({ type: 'danger', message: '设备不在线' ,duration: 10000,});
+          Notify({
+            type: 'danger',
+            message: '设备不在线',
+            duration: 10000,
+          });
         }
       }
     })
   },
-  onShow:function (options) {
-    let  that=this
+  onShow: function (options) {
+    let that = this
 
-    if(this.data.intervalnumber==null){
-      this.data.intervalnumber=  setInterval(() => {    
+    if (this.data.intervalnumber == null) {
+      this.data.intervalnumber = setInterval(() => {
         that.deviceisOnline()
       }, 100000);
     }
   },
-  onLoad: function () {
-    let  that=this
+  onLoad: function (options) {
+   
+    if (options.q) {//体验版  去小程序管理后台加规则进入
+     
+      let q = decodeURIComponent(options.q); 
+      //&是我们定义的参数链接方式
+      let deviceId = q.split("=")[1];
+      app.globalData.deviceId = deviceId 
+    }
+     
+    
+
+    let that = this
     wx.request({
       url: 'https://www.iimiim.cn/vending/public/device/info',
       dataType: 'json',
@@ -226,30 +239,30 @@ Page({
           that.setData({
             containerState: res.data.data.containerState
           })
-          app.globalData.containList =  res.data.data.containList
+          app.globalData.containList = res.data.data.containList
           that.setData({
             list: res.data.data.containList.filter((item) => {
 
               if (that.data.containerState.substring(item.number - 1, item.number) > 0) {
                 item.available = 1
-              } else  {
+              } else {
                 item.available = 0
               }
-              return item.number !=1 && item.number != 2
+              return item.number != 1 && item.number != 2
             })
           })
           that.setData({
             listfix: res.data.data.containList.filter((item) => {
               if (that.data.containerState.substring(item.number - 1, item.number) > 0) {
                 item.available = 1
-              } else  {
+              } else {
                 item.available = 0
               }
 
               // if (item.number == 1) {
               //   item.commodify.price = 0
               // }
-              return item.number ==1|| item.number ==2
+              return item.number == 1 || item.number == 2
             })
           })
 

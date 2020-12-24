@@ -1,9 +1,17 @@
 //app.js
 App({
 
-  onLaunch: function () {
+  onLaunch: function (options) {
+    console.log(options)
+    let that=this
+    if(options.query){//发布版
+    
+      let  scene = decodeURIComponent(options.query.scene)
+      that.globalData.deviceId = scene 
+      
+    }
 
-   let that=this
+   
     // 登录
     wx.login({
       success: res => {
@@ -33,6 +41,6 @@ App({
     userInfo: null,
     openid:"",
     containList:[],
-    deviceId:'100002'
+    deviceId:'10000000'
   }
 })
