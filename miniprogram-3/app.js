@@ -5,10 +5,10 @@ App({
     console.log(options)
     let that=this
     if(options.query){//发布版
-    
-      let  scene = decodeURIComponent(options.query.scene)
-      that.globalData.deviceId = scene 
-      
+      if(options.query.scene){
+        let  scene = decodeURIComponent(options.query.scene)
+        that.globalData.deviceId = scene 
+      }
     }
 
    
