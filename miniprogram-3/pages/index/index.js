@@ -25,16 +25,22 @@ Page({
     }
   },
   onChange(event) {
+    this.setData({
+      number: event.detail
+    });
+    
     let price = event.detail * this.data.goodschoose.commodify.price;
     this.setData({
       price: price
     });
   },
   showPopup(e) {
-
+    this.setData({
+      number: 1
+    });
     let item = e.currentTarget.dataset.item
-
-    if (item.number == 8 && item.available == 0) {
+console.log(item)
+    if (item.number == 2 && item.available == 0) {
       this.setData({
         showgoon: true
       });
@@ -106,7 +112,7 @@ Page({
       }
 
 
-      if (that.data.goodschoose.available == 0) {
+      if (that.data.goodschoose.available == 0 && that.data.goodschoose.number != 1 && that.data.goodschoose.number != 2) {
         console.log(that.data.goodschoose)
         Toast('此商品暂时无货');
 
@@ -133,7 +139,7 @@ Page({
             success(res) {
 
               if (res.data.code == 1) {
-                if (that.data.goodschoose.number == 1 && that.data.goodschoose.typeId == 1) {
+                if ((that.data.goodschoose.number == 1 || that.data.goodschoose.number == 1) && that.data.goodschoose.typeId == 1) {
                   Toast('支付成功,您可以使用此功能啦');
                 } else {
                   wx.requestPayment({
@@ -214,16 +220,16 @@ Page({
     }
   },
   onLoad: function (options) {
-   
-    if (options.q) {//体验版  去小程序管理后台加规则进入
-     
-      let q = decodeURIComponent(options.q); 
-      //&是我们定义的参数链接方式
-      let deviceId = q.split("=")[1];
-      app.globalData.deviceId = deviceId 
-    }
-     
-    
+
+    // if (options&&options.q) {//体验版  去小程序管理后台加规则进入
+
+    //   let q = decodeURIComponent(options.q); 
+    //   //&是我们定义的参数链接方式
+    //   let deviceId = q.split("=")[1];
+    //   app.globalData.deviceId = deviceId 
+    // }
+
+
 
     let that = this
     wx.request({
@@ -240,6 +246,7 @@ Page({
             containerState: res.data.data.containerState
           })
           app.globalData.containList = res.data.data.containList
+          res.data.data.containList.sort(function (x, y) { return x.number - y.number });
           that.setData({
             list: res.data.data.containList.filter((item) => {
 
@@ -258,10 +265,7 @@ Page({
               } else {
                 item.available = 0
               }
-
-              // if (item.number == 1) {
-              //   item.commodify.price = 0
-              // }
+            
               return item.number == 1 || item.number == 2
             })
           })

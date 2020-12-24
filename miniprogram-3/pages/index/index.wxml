@@ -37,7 +37,7 @@
     <view class="orderdesc">
       <view class="name">{{goodschoose.commodify.name}}</view>
       <view class="stepnumber">
-        <van-stepper value="{{ 1 }}" bind:change="onChange" />
+        <van-stepper value="{{ number }}" bind:change="onChange" />
         <view> {{goodschoose.commodify.unit}}</view>
       </view>
     </view>

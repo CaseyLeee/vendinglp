@@ -4,7 +4,7 @@ App({
   onLaunch: function (options) {
     console.log(options)
     let that=this
-    if(options.query){//发布版
+    if(options&&options.query){//发布版
       if(options.query.scene){
         let  scene = decodeURIComponent(options.query.scene)
         that.globalData.deviceId = scene 
