@@ -1,6 +1,6 @@
 <!--index.wxml-->
 
-<van-nav-bar title="自助购物" style="width: 100%;position:fixed;top: 0;">
+<van-nav-bar title="{{name}}" style="width: 100%;position:fixed;top: 0;">
   <van-icon name="like" slot="left" size="60rpx" color="#ee0a24" bindtap="toorder" />
 </van-nav-bar>
 <view class="containerindex">

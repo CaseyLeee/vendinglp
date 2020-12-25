@@ -5,6 +5,7 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 Page({
   data: {
+    name:"",
     intervalnumber: null,
     showdialog: false,
 
@@ -28,18 +29,17 @@ Page({
     this.setData({
       number: event.detail
     });
-    
     let price = event.detail * this.data.goodschoose.commodify.price;
     this.setData({
       price: price
     });
+    console.log("this.data.number",this.data.number)
   },
   showPopup(e) {
     this.setData({
       number: 1
     });
     let item = e.currentTarget.dataset.item
-console.log(item)
     if (item.number == 2 && item.available == 0) {
       this.setData({
         showgoon: true
@@ -99,6 +99,7 @@ console.log(item)
     return S4() + S4() + S4() + S4() + S4() + S4() + S4() + S4();
   },
   onSubmit(e) {
+    console.log(this.data.number)
     this.setData({
       show: false
     });
@@ -113,7 +114,7 @@ console.log(item)
 
 
       if (that.data.goodschoose.available == 0 && that.data.goodschoose.number != 1 && that.data.goodschoose.number != 2) {
-        console.log(that.data.goodschoose)
+        // console.log(that.data.goodschoose)
         Toast('此商品暂时无货');
 
       } else {
@@ -244,6 +245,9 @@ console.log(item)
         if (res.data.code == 1) {
           that.setData({
             containerState: res.data.data.containerState
+          })
+          that.setData({
+            name: res.data.data.name
           })
           app.globalData.containList = res.data.data.containList
           res.data.data.containList.sort(function (x, y) { return x.number - y.number });
