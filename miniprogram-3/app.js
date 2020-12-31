@@ -2,45 +2,64 @@
 App({
 
   onLaunch: function (options) {
+
+
     console.log(options)
-    let that=this
-    if(options&&options.query){//发布版
-      if(options.query.scene){
-        let  scene = decodeURIComponent(options.query.scene)
-        that.globalData.deviceId = scene 
+    let that = this
+    if (options && options.query) { //发布版
+      if (options.query.scene) {
+        let scene = decodeURIComponent(options.query.scene)
+        that.globalData.deviceId = scene
+        console.log("options", that.globalData.deviceId)
+        wx.setStorageSync('deviceId', scene)
       }
     }
-
    
+    if (that.globalData.deviceId == "") {
+      wx.getStorage({
+        key: 'deviceId',
+        success: function (res) {
+          // success
+          that.globalData.deviceId = res.data
+          console.log("deviceIdgetStorage", that.globalData.deviceId)
+              if(that.getdecid){
+                that.getdecid()
+              }
+        }
+      })
+    }
+    console.log("deviceIdend", that.globalData.deviceId)
+
+
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      
+
         wx.request({
           url: 'https://www.iimiim.cn/vending/public/cosumer/getOpenId',
           dataType: 'json',
-          method:"GET",
+          method: "GET",
           data: {
             code: res.code
           },
           success(res) {
-          
-            if(res.data.code==1){
-             
+
+            if (res.data.code == 1) {
+
               that.globalData.openid = res.data.data
-            
+
             }
           }
         })
       }
     })
- 
+
   },
   globalData: {
     userInfo: null,
-    openid:"",
-    containList:[],
-    deviceId:'10000000'
+    openid: "",
+    containList: [],
+    deviceId: ''
   }
 })

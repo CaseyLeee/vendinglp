@@ -5,7 +5,7 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 Page({
   data: {
-    name:"",
+    name: "",
     intervalnumber: null,
     showdialog: false,
 
@@ -33,7 +33,7 @@ Page({
     this.setData({
       price: price
     });
-    console.log("this.data.number",this.data.number)
+    console.log("this.data.number", this.data.number)
   },
   showPopup(e) {
     this.setData({
@@ -205,7 +205,7 @@ Page({
           Notify({
             type: 'danger',
             message: '设备不在线',
-            duration: 10000,
+            duration: 9000,
           });
         }
       }
@@ -217,21 +217,10 @@ Page({
     if (this.data.intervalnumber == null) {
       this.data.intervalnumber = setInterval(() => {
         that.deviceisOnline()
-      }, 100000);
+      }, 10000);
     }
   },
-  onLoad: function (options) {
-
-    // if (options&&options.q) {//体验版  去小程序管理后台加规则进入
-
-    //   let q = decodeURIComponent(options.q); 
-    //   //&是我们定义的参数链接方式
-    //   let deviceId = q.split("=")[1];
-    //   app.globalData.deviceId = deviceId 
-    // }
-
-
-
+  showindex: function () {
     let that = this
     wx.request({
       url: 'https://www.iimiim.cn/vending/public/device/info',
@@ -250,7 +239,9 @@ Page({
             name: res.data.data.name
           })
           app.globalData.containList = res.data.data.containList
-          res.data.data.containList.sort(function (x, y) { return x.number - y.number });
+          res.data.data.containList.sort(function (x, y) {
+            return x.number - y.number
+          });
           that.setData({
             list: res.data.data.containList.filter((item) => {
 
@@ -269,7 +260,7 @@ Page({
               } else {
                 item.available = 0
               }
-            
+
               return item.number == 1 || item.number == 2
             })
           })
@@ -277,5 +268,24 @@ Page({
         }
       }
     })
+  },
+  onLoad: function (options) {
+
+    // if (options&&options.q) {//体验版  去小程序管理后台加规则进入
+
+    //   let q = decodeURIComponent(options.q); 
+    //   //&是我们定义的参数链接方式
+    //   let deviceId = q.split("=")[1];
+    //   app.globalData.deviceId = deviceId 
+    // }
+    let that = this
+    if (app.globalData.deviceId != "") {
+      that.showindex()
+    } else {
+      app.getdecid = () => {
+        this.showindex()
+      }
+    }
+
   }
 })
