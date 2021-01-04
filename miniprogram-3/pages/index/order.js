@@ -24,7 +24,7 @@ Page({
     let that = this
     wx.request({
 
-      url: 'https://www.iimiim.cn/vending/public/order/delete',
+      url: app.globalData.url+ 'vending/public/order/delete',
       dataType: 'json',
       method: "GET",
       data: {
@@ -55,7 +55,7 @@ Page({
     
     wx.request({
 
-      url: 'https://www.iimiim.cn/vending/public/order/resend',
+      url: app.globalData.url+ 'vending/public/order/resend',
       dataType: 'json',
       method: "GET",
       data: {
@@ -76,7 +76,7 @@ Page({
     let that = this
     wx.request({
 
-      url: 'https://www.iimiim.cn/vending/public/order/queryWeixin',
+      url: app.globalData.url+ 'vending/public/order/queryWeixin',
       dataType: 'json',
       method: "GET",
       data: {
@@ -100,7 +100,7 @@ Page({
     })
     wx.request({
 
-      url: 'https://www.iimiim.cn/vending/public/order/query',
+      url: app.globalData.url+ 'vending/public/order/query',
       dataType: 'json',
       method: "POST",
       data: {

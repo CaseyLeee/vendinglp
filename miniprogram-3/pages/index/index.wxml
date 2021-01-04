@@ -10,7 +10,7 @@
     <image class="banner" mode="widthFix" src="../../images/img_3.png"></image>
   </view>
 
-  <view class="list">
+  <view class="list listfix">
     <view class="goods" wx:for="{{listfix}}" wx:key="containerId">
       <image bindtap="showPopup" data-item="{{item}}" class="goodsimg" mode="scaleToFill"
         src="{{imgurl+item.commodify.pircture}}"></image>
@@ -23,13 +23,14 @@
   </view>
 
   <view class="list">
-    <view wx:for="{{list}}" wx:key="containerId" class="goods,{{item.available!=0?'':'grayscale'}}">
+    <view wx:for="{{list}}" wx:key="containerId" class="listgoods,goods,{{item.available!=0?'':'grayscale'}}">
       <image bindtap="onSubmit" data-item="{{item}}" class="goodsimg" mode="scaleToFill"
         src="{{imgurl+item.commodify.pircture}}"></image>
-      <text>{{item.commodify.details}}</text>
+      <text class="fontsz20">{{item.commodify.details}}</text>
       <view class="goods_bot">
-        <text>{{item.commodify.price/100}}</text>
-        <text bindtap="onSubmit" data-item="{{item}}">{{item.available!=0?'立即购买':'无货'}}</text>
+        <text class="fontsz26">{{item.commodify.price/100}}</text>
+        <view class="fontsz20" bindtap="onSubmit" data-item="{{item}}">{{item.available!=0?'立即购买':'无货'}}<van-icon name="cart-circle" color="#CC3333" size="36rpx"/></view>
+        
       </view>
     </view>
   </view>

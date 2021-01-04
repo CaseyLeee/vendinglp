@@ -10,7 +10,7 @@ Page({
     showdialog: false,
 
     imgurl: "https://www.iimiim.cn/",
-    requrl: "https://www.iimiim.cn/vending/",
+ 
 
     containerState: "",
     list: [],
@@ -134,7 +134,7 @@ Page({
           param.deviceId = app.globalData.deviceId
           param.statusCosumer = "1"
           wx.request({
-            url: that.data.requrl + 'public/order/insert',
+            url: app.globalData.url+ 'vending/public/order/insert',
             data: param,
             method: "POST",
             success(res) {
@@ -152,14 +152,13 @@ Page({
                     'success': function (res) {
                       Toast('支付成功,请取出商品');
 
-
                       that.onLoad();
                     },
                     'fail': function (res) {
                       if (res.errMsg.indexOf("cancel") > 0) {
                         //调用订单取消接口
                         wx.request({
-                          url: that.data.requrl + 'public/order/cancelOrder',
+                          url: app.globalData.url + 'vending/public/order/cancelOrder',
                           data: {
                             orderId: param.orderId
                           },
@@ -225,7 +224,7 @@ Page({
     
     let that = this
     wx.request({
-      url: 'https://www.iimiim.cn/vending/public/device/info',
+      url: app.globalData.url+'vending/public/device/info',
       dataType: 'json',
       method: "GET",
       data: {
@@ -283,9 +282,11 @@ Page({
     let that = this
     if (app.globalData.deviceId != "") {
       that.showindex()
+      app.deviceisOnline()
     } else {
       app.getdecid = () => {
         this.showindex()
+        app.deviceisOnline()
       }
     }
 
