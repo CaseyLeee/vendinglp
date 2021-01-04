@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    usecan:1,
     orderlist: [],
     imgurl: "https://www.iimiim.cn/",
   },
@@ -40,8 +41,18 @@ Page({
     })
   },
   use(e) {
-    let order = e.currentTarget.dataset.order
     let that = this
+    that.setData({
+      usecan: 0
+    })
+   
+    setTimeout(() => {
+      that.setData({
+        usecan: 1
+      })
+    }, 4000);
+    let order = e.currentTarget.dataset.order
+    
     wx.request({
 
       url: 'https://www.iimiim.cn/vending/public/order/resend',

@@ -11,7 +11,7 @@
       <view class="nameitem">
         <view class="item date">商品名称:{{item.contain.commodify.name}}</view>
         <van-button type="primary" size="mini" type="danger" data-order="{{item.orderId}}" bindtap="del" >删除订单</van-button>
-        <van-button type="primary" size="mini" data-order="{{item.orderId}}" bindtap="use" >使用</van-button>
+        <van-button wx:if="{{item.status=='已支付'&&usecan==1}}" type="primary" size="mini" data-order="{{item.orderId}}" bindtap="use" >使用</van-button>
       </view>
 
       <view class="itemtop">

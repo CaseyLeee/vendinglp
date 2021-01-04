@@ -2,7 +2,7 @@
 //获取应用实例
 const app = getApp()
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
-import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
+// import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 Page({
   data: {
     name: "",
@@ -186,41 +186,43 @@ Page({
       }
     }
   },
-  deviceisOnline() {
-    let deviceId = app.globalData.deviceId;
-    let that = this
-    wx.request({
+  // deviceisOnline() {
+  //   let deviceId = app.globalData.deviceId;
+  //   let that = this
+  //   wx.request({
 
-      url: 'https://www.iimiim.cn/vending/public/device/isOnline',
-      dataType: 'json',
-      method: "GET",
-      data: {
-        deviceId: deviceId
-      },
-      success(res) {
+  //     url: 'https://www.iimiim.cn/vending/public/device/isOnline',
+  //     dataType: 'json',
+  //     method: "GET",
+  //     data: {
+  //       deviceId: deviceId
+  //     },
+  //     success(res) {
 
-        if (res.data.code == 1) {
+  //       if (res.data.code == 1) {
 
-        } else {
-          Notify({
-            type: 'danger',
-            message: '设备不在线',
-            duration: 9000,
-          });
-        }
-      }
-    })
-  },
-  onShow: function (options) {
-    let that = this
-
-    if (this.data.intervalnumber == null) {
-      this.data.intervalnumber = setInterval(() => {
-        that.deviceisOnline()
-      }, 10000);
-    }
-  },
+  //       } else {
+  //         Notify({
+  //           type: 'danger',
+  //           message: '设备不在线',
+  //           duration: 9000,
+  //           safeAreaInsetTop:true
+  //         });
+  //       }
+  //     }
+  //   })
+  // },
+  // onShow: function (options) {
+  //   let that = this
+    
+  //   if (this.data.intervalnumber == null) {
+  //     this.data.intervalnumber = setInterval(() => {
+  //       that.deviceisOnline()
+  //     }, 10000);
+  //   }
+  // },
   showindex: function () {
+    
     let that = this
     wx.request({
       url: 'https://www.iimiim.cn/vending/public/device/info',
