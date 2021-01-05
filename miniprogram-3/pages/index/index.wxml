@@ -1,11 +1,10 @@
 <!--index.wxml-->
 
 <van-nav-bar title="{{name}}" style="width: 100%;position:fixed;top: 0;">
-  <van-icon name="like" slot="left" size="60rpx" color="#ee0a24" bindtap="toorder" />
+  <van-icon name="contact" slot="left" size="50rpx" color="#0099CC" bindtap="toorder" />
+  
 </van-nav-bar>
 <view class="containerindex">
-
-
   <view class="top_contain">
     <image class="banner" mode="widthFix" src="../../images/img_3.png"></image>
   </view>
@@ -16,9 +15,6 @@
         src="{{imgurl+item.commodify.pircture}}"></image>
       <text>{{item.commodify.name}}</text> <text
         style="float:right">{{item.commodify.price/100}}/{{item.commodify.unit}}</text>
-      <view class="goods_bot">
-
-      </view>
     </view>
   </view>
 
@@ -29,7 +25,7 @@
       <text class="fontsz20">{{item.commodify.details}}</text>
       <view class="goods_bot">
         <text class="fontsz26">{{item.commodify.price/100}}</text>
-        <view class="fontsz20" bindtap="onSubmit" data-item="{{item}}">{{item.available!=0?'立即购买':'无货'}}<van-icon name="cart-circle" color="#CC3333" size="36rpx"/></view>
+        <view class="fontsz20 shop" bindtap="onSubmit" data-item="{{item}}"><view>{{item.available!=0?'立即购买':'无货'}}</view><van-icon name="cart-circle" color="#CC3333" size="36rpx"/></view>
         
       </view>
     </view>

@@ -2,37 +2,42 @@
 import Notify from './miniprogram_npm/@vant/weapp/notify/notify';
 import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 App({
+onShow:function (options) {
+ 
+  let that = this
+  if (options && options.query && options.query.scene) {//扫码进去的
+    let scene = decodeURIComponent(options.query.scene)
+    that.globalData.deviceId = scene
+    that.tointervalnumber()
+    console.log("options", that.globalData.deviceId)
+    wx.setStorageSync('deviceId', scene)
+  } else if (that.globalData.deviceId == "") {//下拉进去的
+    wx.getStorage({
+      key: 'deviceId',
+      success: function (res) {
+        // success
+        that.globalData.deviceId = res.data
+        console.log("deviceIdgetStorage", that.globalData.deviceId)
 
+        that.tointervalnumber()
+
+        if (that.getdecid) {
+          that.getdecid()
+        }
+      },
+      fail: function () {
+        Toast('请先退出目前小程序,重新扫码进入小程序');
+      }
+    })
+  }
+
+},
   onLaunch: function (options) {
 
 
     console.log(options)
     let that = this
-    if (options && options.query && options.query.scene) {//扫码进去的
-      let scene = decodeURIComponent(options.query.scene)
-      that.globalData.deviceId = scene
-      that.tointervalnumber()
-      console.log("options", that.globalData.deviceId)
-      wx.setStorageSync('deviceId', scene)
-    } else if (that.globalData.deviceId == "") {//下拉进去的
-      wx.getStorage({
-        key: 'deviceId',
-        success: function (res) {
-          // success
-          that.globalData.deviceId = res.data
-          console.log("deviceIdgetStorage", that.globalData.deviceId)
-
-          that.tointervalnumber()
-
-          if (that.getdecid) {
-            that.getdecid()
-          }
-        },
-        fail: function () {
-          Toast('请先退出目前小程序,重新扫码进入小程序');
-        }
-      })
-    }
+    
 
 
 

@@ -26,19 +26,15 @@
   flex-wrap: wrap;
 }
 .goods{
-  /* height: 400rpx; */
-  width: calc(50% - 40rpx);
-
-  /* #003399 */
+  width: calc(50% - 30rpx);
   box-sizing: border-box;
   margin: 10rpx;
   padding: 10rpx;
  border-radius: 5rpx;
-  /* background-color: #9FB6CD; */
-  
+ 
 }
 .listgoods{
-  border: solid 1rpx #999966; 
+  border: solid 1rpx #666666	; 
   border-radius: 10rpx;
 }
 .goodsimg{
@@ -56,8 +52,14 @@ border-radius: 20rpx;
   color: 	#333333;
   font-size: 36rpx;
 }
+.shop{
+  display: flex;
+  align-items: center;
+}
 .listfix{
-  background-color: #e7e7eb;
+  background-color: #E3E3E3		;
+  color: #4C4C4C;
+  font-size: 24rpx;
 }
 .goods_bot{
   display: flex;

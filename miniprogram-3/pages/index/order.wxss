@@ -18,6 +18,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding:0 0 0 20rpx;
+  width: 100%;
 }
 .itemtop{
   padding: 0 20rpx 0 0;
