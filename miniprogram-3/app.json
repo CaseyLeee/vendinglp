@@ -2,9 +2,11 @@
   "pages": [
     "pages/index/index",
     "pages/index/order",
-    
-    "pages/logs/logs"
-    
+    "pages/logs/logs",
+    "pages/index/event/person",
+    "pages/index/event/login",
+    "pages/admin/home",
+    "pages/admin/counter"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -14,5 +16,4 @@
     "navigationStyle": "custom"
   },
   "sitemapLocation": "sitemap.json"
-  
 }

@@ -3,15 +3,24 @@ import Notify from './miniprogram_npm/@vant/weapp/notify/notify';
 import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 App({
 onShow:function (options) {
- 
+
   let that = this
-  if (options && options.query && options.query.scene) {//扫码进去的
+  if (options && options.query && options.query.scene) {//扫小程序码进入
     let scene = decodeURIComponent(options.query.scene)
     that.globalData.deviceId = scene
     that.tointervalnumber()
     console.log("options", that.globalData.deviceId)
     wx.setStorageSync('deviceId', scene)
-  } else if (that.globalData.deviceId == "") {//下拉进去的
+  } 
+ else if (options && options.query && options.query.q) {//扫二维码序码进入
+  
+        let q = decodeURIComponent(options.query.q); 
+        console.log( q)
+      //&是我们定义的参数链接方式
+       let deviceId = q.split("=")[2];
+       that.globalData.deviceId = deviceId 
+  } 
+  else if (that.globalData.deviceId == "") {//下拉进去的
     wx.getStorage({
       key: 'deviceId',
       success: function (res) {
@@ -65,17 +74,22 @@ onShow:function (options) {
       }
     })
 
+    wx.getStorage({
+      key: 'userInfo',
+      success: function (res) {
+        // success
+        console.log("userInfo",res.data)
+        that.globalData.userInfo = res.data
+        console.log("userInfo", that.globalData.userInfo)
+        
+      }
+      
+    })
+
   },
 
   
-  globalData: {
-    url:"https://www.iimiim.cn/",
-    userInfo: null,
-    openid: "",
-    containList: [],
-    deviceId: '',
-    intervalnumber: null
-  },
+  
   deviceisOnline() {
     let deviceId = this.globalData.deviceId;
     let that = this
@@ -89,7 +103,7 @@ onShow:function (options) {
       },
       success(res) {
 
-        if (res.data.code ==1) {
+        if (res.data.code ==0) {
 
         } else {
          
@@ -112,5 +126,13 @@ onShow:function (options) {
         that.deviceisOnline()
       }, 10000);
     }
+  },
+  globalData: {
+    url:"https://www.iimiim.cn/",
+    userInfo: null,
+    openid: "",
+    containList: [],
+    deviceId: '',
+    intervalnumber: null
   },
 })

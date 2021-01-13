@@ -1,0 +1,20 @@
+<van-nav-bar title="" style="width: 100%;position:fixed;top: 0;">
+  <van-icon name="arrow-left" slot="left" size="60rpx" bindtap="toinex" />
+</van-nav-bar>
+
+<view class="userinfo">
+  <view class="useravatar">
+    <open-data class="avatar" type="userAvatarUrl"></open-data>
+    <open-data type="userNickName"></open-data>
+  </view>
+
+  <van-button size="small" type="primary"  bindtap="gologin">我是商户</van-button>
+</view>
+
+<view class="oper">
+  <van-divider />
+  <view bindtap="goorder">订单</view>
+  <van-divider />
+  <view >投诉建议</view>
+  <van-divider />
+</view>

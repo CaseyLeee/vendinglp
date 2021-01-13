@@ -10,7 +10,7 @@ Page({
     showdialog: false,
 
     imgurl: "https://www.iimiim.cn/",
- 
+
 
     containerState: "",
     list: [],
@@ -63,10 +63,10 @@ Page({
     this.setData({
       showgoon: false
     });
-
-    wx.navigateTo({
-      url: '/pages/index/order'
-    })
+    
+    // wx.navigateTo({
+    //   url: '/pages/index/order'
+    // })
   },
   gouse() {
 
@@ -88,8 +88,11 @@ Page({
   toorder() {
     clearInterval(this.data.intervalnumber)
     wx.navigateTo({
-      url: '/pages/index/order'
+      url: '/pages/index/event/person'
     })
+    // wx.navigateTo({
+    //   url: '/pages/index/order'
+    // })
   },
 
   guid() {
@@ -134,7 +137,7 @@ Page({
           param.deviceId = app.globalData.deviceId
           param.statusCosumer = "1"
           wx.request({
-            url: app.globalData.url+ 'vending/public/order/insert',
+            url: app.globalData.url + 'vending/public/order/insert',
             data: param,
             method: "POST",
             success(res) {
@@ -213,7 +216,7 @@ Page({
   // },
   // onShow: function (options) {
   //   let that = this
-    
+
   //   if (this.data.intervalnumber == null) {
   //     this.data.intervalnumber = setInterval(() => {
   //       that.deviceisOnline()
@@ -221,10 +224,10 @@ Page({
   //   }
   // },
   showindex: function () {
-    
+
     let that = this
     wx.request({
-      url: app.globalData.url+'vending/public/device/info',
+      url: app.globalData.url + 'vending/public/device/info',
       dataType: 'json',
       method: "GET",
       data: {

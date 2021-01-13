@@ -1,0 +1,30 @@
+.userinfo {
+  margin-top: 132rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10rpx;
+  margin-right: 20rpx;
+}
+
+.useravatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  overflow: hidden;
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+.oper{
+  margin: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  font-size: 26rpx;
+}

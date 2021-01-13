@@ -1,0 +1,51 @@
+.userinfo {
+  margin-top: 132rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  
+}
+.panel{
+  background-color: #E3E3E3;
+}
+.useravatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  overflow: hidden;
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+.butn{
+  display: flex;
+  padding: 30rpx;
+}
+.oper{
+  margin: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  font-size: 26rpx;
+}
+.butnitem{
+  
+  height: 90rpx;
+  width: 100%;
+  line-height: 90rpx;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #666666;
+}
+.butnitemnobr{
+  border-left:2rpx solid #666666;
+}

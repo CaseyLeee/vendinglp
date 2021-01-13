@@ -1,0 +1,6 @@
+<van-nav-bar title="" style="width: 100%;position:fixed;top: 0;">
+  <van-icon name="arrow-left" slot="left" size="60rpx" bindtap="toinex" />
+</van-nav-bar>
+<view>
+  
+</view>

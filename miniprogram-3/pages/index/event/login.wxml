@@ -1,0 +1,30 @@
+<van-nav-bar title="登录" style="width: 100%;position:fixed;top: 0;">
+  <van-icon name="arrow-left" slot="left" size="60rpx" bindtap="toinex" />
+</van-nav-bar>
+
+<view class="logincon">
+ 
+    <van-field
+    model:value="{{ username }}"
+   
+    clearable
+    label="用户名"
+   
+    placeholder="请输入用户名"
+    left-icon="contact"
+    
+  />
+  <van-field
+    model:value="{{ password }}"
+    type="password"
+    label="密码"
+    placeholder="请输入密码"
+    clearable
+    left-icon="lock"
+    border="{{ false }}"
+  />
+  <van-button type="primary" block bindtap="login">登录</van-button>
+
+
+</view>
+<van-toast id="van-toast" />
