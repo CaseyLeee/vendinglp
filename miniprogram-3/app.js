@@ -1,6 +1,7 @@
 //app.js
 import Notify from './miniprogram_npm/@vant/weapp/notify/notify';
 import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
+
 App({
 onShow:function (options) {
 
@@ -78,9 +79,9 @@ onShow:function (options) {
       key: 'userInfo',
       success: function (res) {
         // success
-        console.log("userInfo",res.data)
+        console.log("userInfoappjs",res.data)
         that.globalData.userInfo = res.data
-        console.log("userInfo", that.globalData.userInfo)
+       
         
       }
       

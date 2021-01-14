@@ -6,7 +6,9 @@
     "pages/index/event/person",
     "pages/index/event/login",
     "pages/admin/home",
-    "pages/admin/counter"
+    "pages/admin/counter",
+    "pages/admin/counteredit",
+    "pages/admin/doormanage"
   ],
   "window": {
     "backgroundTextStyle": "light",

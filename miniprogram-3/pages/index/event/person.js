@@ -18,14 +18,22 @@ Page({
     wx.navigateBack()
   },
   goorder(){
-     wx.navigateTo({
+     wx.redirectTo({
       url: '/pages/index/order'
     })
   },
   gologin(){
-    wx.navigateTo({
-     url: '/pages/index/event/login'
-   })
+    if(app.globalData.userInfo==null){
+      wx.redirectTo({
+        url: '/pages/index/event/login'
+      })
+    }
+    else{
+      wx.redirectTo({
+        url: '/pages/admin/home'
+      })
+    }
+    
  },
   /**
    * 生命周期函数--监听页面初次渲染完成

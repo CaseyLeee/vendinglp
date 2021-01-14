@@ -1,6 +1,42 @@
 <van-nav-bar title="" style="width: 100%;position:fixed;top: 0;">
   <van-icon name="arrow-left" slot="left" size="60rpx" bindtap="toinex" />
 </van-nav-bar>
-<view>
-  
+<view class="head">
+  <view class="flex1">
+    设备id
+  </view>
+  <view class="flex1">
+    名称
+  </view>
+  <view class="flex1">
+    说明
+  </view>
+  <view class="flex1">
+    类型
+  </view>
+  <view class="flex1">
+    操作
+  </view>
 </view>
+<view  wx:for="{{counterlist}}" wx:key="identifyId" class="tablebodyitem">
+  <view class="flex1">
+    {{item.deviceId}}
+  </view>
+  <view class="flex1">
+    {{item.name}}
+  </view>
+  <view class="flex1">
+    {{item.remrak?item.remrak:""}}
+  </view>
+  <view class="flex1">
+    {{item.type}}
+  </view>
+  <view  class="flex1 oper">
+
+    <van-button type="primary" size="mini" type="primary" data-item="{{item}}"  bindtap="edit" >编辑</van-button>
+
+    <van-button style="margin-top:10rpx" type="warning" size="mini"  data-id="{{item.identifyId}}" bindtap="del" >删除</van-button>
+  </view>
+</view>
+<van-toast id="van-toast" />
+<van-dialog id="van-dialog" />

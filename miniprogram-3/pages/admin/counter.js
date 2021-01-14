@@ -1,44 +1,61 @@
 // pages/admin/counter.js
+const app = getApp()
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
 
   /**
    * 页面的初始数据
    */
- 
+
   data: {
     counterlist: [],
   },
-
+del(e){
+  let id = e.currentTarget.dataset.id
+  Dialog.confirm({
+    title: '删除',
+    message: '确认删除此设备吗',
+  })
+    .then(() => {
+      // on confirm
+    })
+    .catch(() => {
+      // on cancel
+    });
+},
+toinex(){
+  wx.navigateBack()
+},
+edit(e){
+  let item = e.currentTarget.dataset.item;
+  wx.navigateTo({
+    url: '/pages/admin/counteredit?deviceId=' +item.deviceId+'&name='+item.name+'&remark='+item.remrak
+   })
+},
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
-    
-    var containmap = {}
-    containList.map((item) => {
-      containmap[item.commodifyId] = item
-    })
+
     wx.request({
 
-      url: app.globalData.url+ 'vending/public/order/query',
+      url: app.globalData.url + 'vending/foreground/device/list',
       dataType: 'json',
       method: "POST",
-      data: {
-        comumerId: openid
+      data: {},
+      header: {
+        'msToken': app.globalData.userInfo.token
       },
       success(res) {
-
         if (res.data.code == 1) {
-          res.data.data.map(function (item) {
-            item.status == 0 ? item.status = "删除" : item.status == 1 ? item.status = "未支付" : item.status == 2 ? item.status = "已支付" : item.status == 3 ? item.status = "支付异常" : item.status == 4 ? item.status = "已撤销" : item.status == 5 ? item.status = "退款" : "其他"
-            item.createTime = time.formatTimeTwo(item.createTime, 'Y/M/D h:m:s')
-            item.contain = containmap[item.commodifyId]
-          })
+        
           that.setData({
-            orderlist: res.data.data
+            counterlist: res.data.data
           })
-
+        } else {
+          Toast(res.data.message)
         }
       }
     })
