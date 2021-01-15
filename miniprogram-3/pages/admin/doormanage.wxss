@@ -1,0 +1,60 @@
+.grey {
+  filter: grayscale(100%);
+}
+.conbody {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+.circlecon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.contain {
+  border: solid 6px #409eff;
+  margin: 10px;
+
+  background-color: azure;
+  border-radius: 10px;}
+  .number {
+    background-color: azure;
+    color: #409eff;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  .circle {
+    width: 25%;
+   
+    margin: 10px;
+    position: relative;
+ 
+  }
+  .need {
+    filter: grayscale(1);
+  }
+  .img {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    object-fit: fill;
+  }
+  .allopen{
+   
+    text-align: right;
+    margin-right:10rpx;
+  }
+  .pop{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+  }
