@@ -18,8 +18,19 @@ onShow:function (options) {
         let q = decodeURIComponent(options.query.q); 
         console.log( q)
       //&是我们定义的参数链接方式
-       let deviceId = q.split("=")[2];
-       that.globalData.deviceId = deviceId 
+      //  let deviceId = q.split("=")[2];
+      //  that.globalData.deviceId = deviceId 
+
+       let params=that.getparamsurl(q)
+       console.log(params)
+
+      
+        that.globalData.deviceId = params.code 
+        if(params.aaa =="ccc"){
+          that.globalData.url ="https://iim.ltd/"
+          that.globalData.imgurl="https://iim.ltd/"
+        }
+      
   } 
   else if (that.globalData.deviceId == "") {//下拉进去的
     wx.getStorage({
@@ -41,6 +52,19 @@ onShow:function (options) {
     })
   }
 
+},
+getparamsurl(url){
+  var temp1 = url.split('?');
+  var pram = temp1[1];
+  var keyValue = pram.split('&');
+  var obj = {};
+  for (var i = 0; i<keyValue.length; i++){
+      var item = keyValue[i].split('=');
+      var key = item[0];
+      var value = item[1];
+      obj[key] = value;
+  }
+  return obj
 },
   onLaunch: function (options) {
 
@@ -104,7 +128,7 @@ onShow:function (options) {
       },
       success(res) {
 
-        if (res.data.code ==0) {
+        if (res.data.code ==1) {
 
         } else {
          
@@ -130,6 +154,9 @@ onShow:function (options) {
   },
   globalData: {
     url:"https://www.iimiim.cn/",
+    imgurl:"https://www.iimiim.cn/",
+    // url:"https://iim.ltd/",
+    // imgurl:"https://iim.ltd",
     userInfo: null,
     openid: "",
     containList: [],

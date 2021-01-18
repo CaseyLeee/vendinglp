@@ -9,7 +9,7 @@ Page({
     intervalnumber: null,
     showdialog: false,
 
-    imgurl: "https://www.iimiim.cn/",
+    imgurl: "",
 
 
     containerState: "",
@@ -133,7 +133,7 @@ Page({
           param.number = that.data.number
           param.unit = that.data.goodschoose.commodify.unit
           param.totalPrice = param.price * param.number
-          param.comumerId = app.globalData.openid
+          param.cosumerId = app.globalData.openid
           param.deviceId = app.globalData.deviceId
           param.statusCosumer = "1"
           wx.request({
@@ -283,6 +283,9 @@ Page({
     //   app.globalData.deviceId = deviceId 
     // }
     let that = this
+    that.setData({
+      imgurl:  app.globalData.imgurl
+    })
     if (app.globalData.deviceId != "") {
       that.showindex()
       app.deviceisOnline()

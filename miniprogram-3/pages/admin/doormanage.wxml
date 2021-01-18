@@ -2,7 +2,7 @@
   <van-icon name="arrow-left" slot="left" size="60rpx" bindtap="toinex" />
 </van-nav-bar>
 <view style="margin-top:132rpx">
-  <van-search value="{{ searchvalue }}" placeholder="请输入搜索关键词" />
+  <van-search  model:value="{{searchvalue}}" placeholder="请输入搜索关键词" bind:search="toSearch" />
 </view>
 <view>
   <view class="conbody">

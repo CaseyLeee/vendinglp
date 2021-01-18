@@ -10,7 +10,7 @@ Page({
   data: {
     usecan:1,
     orderlist: [],
-    imgurl: "https://www.iimiim.cn/",
+    imgurl: "",
   },
 
   /**
@@ -42,15 +42,9 @@ Page({
   },
   use(e) {
     let that = this
-    that.setData({
-      usecan: 0
-    })
    
-    setTimeout(() => {
-      that.setData({
-        usecan: 1
-      })
-    }, 4000);
+   
+   
     let order = e.currentTarget.dataset.order
     
     wx.request({
@@ -64,7 +58,15 @@ Page({
       success(res) {
 
         if (res.data.code == 1) {
-          that.onLoad()
+          that.setData({
+            usecan: 0
+          })
+          setTimeout(() => {
+            that.setData({
+              usecan: 1
+            })
+          }, 4000);
+          // that.onLoad()
         } else {
           Toast(res.data.message);
         }
@@ -91,6 +93,7 @@ Page({
     })
   },
   onLoad: function (options) {
+    
     var that = this;
     var openid = app.globalData.openid
     var containList = app.globalData.containList
@@ -98,13 +101,18 @@ Page({
     containList.map((item) => {
       containmap[item.commodifyId] = item
     })
+
+    that.setData({
+      imgurl:  app.globalData.imgurl
+    })
+    
     wx.request({
 
       url: app.globalData.url+ 'vending/public/order/query',
       dataType: 'json',
       method: "POST",
       data: {
-        comumerId: openid
+        cosumerId: openid
       },
       success(res) {
 
@@ -118,6 +126,10 @@ Page({
             orderlist: res.data.data
           })
 
+        }
+        else{
+         
+          Toast(res.data.message)
         }
       }
     })

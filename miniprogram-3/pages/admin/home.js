@@ -7,7 +7,7 @@ Page({
    */
   data: {
     userInfo:{},
-    imgurl: "https://www.iimiim.cn/",
+    imgurl: "",
   },
   gocounter() {
     wx.redirectTo({
@@ -37,6 +37,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      imgurl:  app.globalData.imgurl
+    })
     console.log("app.globalData.userInfo ",app.globalData.userInfo )
     this.setData({
       userInfo: app.globalData.userInfo 

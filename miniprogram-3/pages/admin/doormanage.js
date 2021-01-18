@@ -9,15 +9,23 @@ Page({
    * 页面的初始数据
    */
   data: {
+    searchvalue:"",
     deviceId: "",
     number: "",
     show:false,
-    imgurl: "https://www.iimiim.cn/",
+    imgurl: "",
     counterlist:[],
     containerlist:[]
   },
   toinex(){
     wx.navigateBack()
+  },
+  toSearch(){
+    console.log("this.data.searchvalue",this.data.searchvalue)
+    
+    var that = this;
+    that.querycounterlist()
+    
   },
   showpop(e){
   
@@ -38,7 +46,7 @@ Page({
 
       url: app.globalData.url + 'vending/foreground/device/open/confirm',
       dataType: 'json',
-      method: "POST",
+      method: "GET",
       data: {
         deviceId:that.data.deviceId
       },
@@ -62,7 +70,7 @@ Page({
 
       url: app.globalData.url + 'vending/foreground/device/comand',
       dataType: 'json',
-      method: "POST",
+      method: "GET",
       data: {
         deviceId:that.data.deviceId,
         number:that.data.number
@@ -87,7 +95,7 @@ Page({
 
       url: app.globalData.url + 'vending/foreground/device/open',
       dataType: 'json',
-      method: "POST",
+      method: "GET",
       data: {
         deviceId:e.currentTarget.dataset.deviceid
       },
@@ -108,14 +116,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async  function (options) {
+    
     var that = this;
+    that.setData({
+      imgurl:  app.globalData.imgurl
+    })
     await that.querycontainerlist()
-    await wx.request({
+    await that.querycounterlist()
+    
+  },
+   querycounterlist() {
+    var that = this;
+    let data={}
+   
+    if(that.data.searchvalue!=""){
+      data.name=that.data.searchvalue
+    }
+     wx.request({
 
       url: app.globalData.url + 'vending/foreground/device/list',
       dataType: 'json',
       method: "POST",
-      data: {},
+      data: data,
       header: {
         'msToken': app.globalData.userInfo.token
       },
@@ -141,7 +163,6 @@ Page({
         }
       }
     })
-    
   },
   querycontainerlist(){
     var that = this;

@@ -8,13 +8,13 @@
     <open-data type="userNickName"></open-data>
   </view>
 
-  <van-button size="small" type="primary"  bindtap="gologin">我是商户</van-button>
+  <van-button size="small" type="primary"  bindtap="gologin"  >我是商户</van-button>
 </view>
 
 <view class="oper">
   <van-divider />
   <view bindtap="goorder">订单</view>
   <van-divider />
-  <view >投诉建议</view>
-  <van-divider />
+  <view style="display:none">投诉建议</view>
+ 
 </view>
