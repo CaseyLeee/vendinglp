@@ -15,7 +15,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   toinex() {
-    wx.navigateBack()
+    wx.redirectTo({
+      url: '/pages/index/event/person'
+     })
   },
   login() {
     let that = this
@@ -38,7 +40,7 @@ Page({
       },
       success(res) {
         if(res.data.code==1){
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/admin/home'
           })
           app.globalData.userInfo=res.data.data

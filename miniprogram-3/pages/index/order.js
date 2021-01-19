@@ -17,7 +17,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   toinex() {
-    wx.navigateBack()
+    wx.redirectTo({
+      url: '/pages/index/event/person'
+     })
   },
   del(e) {
     let order = e.currentTarget.dataset.order
@@ -42,8 +44,6 @@ Page({
   },
   use(e) {
     let that = this
-   
-   
    
     let order = e.currentTarget.dataset.order
     

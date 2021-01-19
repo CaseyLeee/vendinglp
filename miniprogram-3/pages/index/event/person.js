@@ -15,7 +15,9 @@ Page({
 
   },
   toinex() {
-    wx.navigateBack()
+    wx.redirectTo({
+      url: '/pages/index/index'
+    })
   },
   goorder(){
      wx.redirectTo({

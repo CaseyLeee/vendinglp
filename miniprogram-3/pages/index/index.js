@@ -274,6 +274,69 @@ Page({
     })
   },
   onLoad: function (options) {
+    //蓝牙
+    wx.openBluetoothAdapter({//开启蓝牙模块
+      success: function (res) {
+        console.log('蓝牙已开启!');
+        wx.getBluetoothAdapterState({//返回的适配器可用
+          success(res) { console.log("getBluetoothAdapterState",res)
+            wx.startBluetoothDevicesDiscovery({//搜索
+              success: function (res) {
+                console.log('startBluetoothDevicesDiscovery success', res)
+                wx.getBluetoothDevices({
+                  success: function (res) {
+                    console.log("getBluetoothDevices",res)
+                    if (res.devices[0]) {
+                      console.log(ab2hex(res.devices[0].advertisData))
+                         wx.stopBluetoothDevicesDiscovery({
+                                  success (res) {
+                                    console.log(res)
+                                  },
+                                  fail (res) {
+                                    console.log(res)
+                                  }
+                                });
+                    wx.createBLEConnection({
+                      // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+                      deviceId,
+                      success (res) {
+                        console.log(res)
+                        wx.getBLEDeviceServices({
+                          // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+                          deviceId,
+                          success (res) {
+                            console.log('device services:', res.services)
+                
+                          wx.getBLEDeviceCharacteristics({
+                            // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+                            deviceId,
+                            // 这里的 serviceId 需要在 getBLEDeviceServices 接口中获取
+                            serviceId,
+                            success (res) {
+                              console.log('device getBLEDeviceCharacteristics:', res.characteristics)
+                                console.log('特征值匹配成功');蓝牙连接成功 
+                            }
+                          })
+                          }
+                        })
+                      }
+                    })
+                    }
+                  }
+                })
+                
+              }
+            });
+           }
+        })
+        
+      },
+      fail: function (e) {
+        console.log('蓝牙未开启或不支持蓝牙!')
+    
+      }
+    });
+    //end
 
     // if (options&&options.q) {//体验版  去小程序管理后台加规则进入
 

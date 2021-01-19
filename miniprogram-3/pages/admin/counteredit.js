@@ -61,7 +61,9 @@ Page({
     })
   },
   toinex(){
-    wx.navigateBack()
+    wx.navigateTo({
+      url: '/pages/admin/counter'
+     })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

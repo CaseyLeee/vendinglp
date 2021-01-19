@@ -15,7 +15,7 @@
   <view class="butn">
 
     <view class="butnitem" bindtap="godoormg">
-      待补货柜
+      待补货柜({{OutOfStockQuantity}})
     </view>
 
     <view class="butnitem butnitemnobr">
@@ -32,3 +32,4 @@
   <view>销售数据</view>
   <van-divider />
 </view>
+<van-toast id="van-toast" />

@@ -13,23 +13,52 @@ Page({
   },
 del(e){
   let id = e.currentTarget.dataset.id
+  let that=this
   Dialog.confirm({
     title: '删除',
     message: '确认删除此设备吗',
   })
     .then(() => {
-      // on confirm
+      wx.request({
+
+        url: app.globalData.url + 'vending/foreground/device/update',
+        dataType: 'json',
+        method: "POST",
+        data: {
+          deviceId: id,
+          userId:""
+         
+        },
+        header: {
+          'msToken': app.globalData.userInfo.token
+        },
+        success(res) {
+          if (res.data.code == 1) {
+            Toast("删除成功");
+            wx.redirectTo({
+              url: '/pages/admin/counter'
+            })
+  
+          } else {
+            Toast(res.data.message);
+          }
+  
+        }
+      })
     })
     .catch(() => {
       // on cancel
     });
 },
 toinex(){
-  wx.navigateBack()
+  
+  wx.redirectTo({
+    url: '/pages/admin/home'
+   })
 },
 edit(e){
   let item = e.currentTarget.dataset.item;
-  wx.navigateTo({
+  wx.redirectTo({
     url: '/pages/admin/counteredit?deviceId=' +item.deviceId+'&name='+item.name+'&remark='+item.remrak
    })
 },

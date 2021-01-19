@@ -1,5 +1,5 @@
 .userinfo {
-  margin-top: 132rpx;
+  margin-top: 145rpx;
   height: 100rpx;
   display: flex;
   align-items: center;

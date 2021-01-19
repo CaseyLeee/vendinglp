@@ -1,5 +1,6 @@
 // pages/admin/home.js
 const app = getApp()
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
 
   /**
@@ -8,6 +9,7 @@ Page({
   data: {
     userInfo:{},
     imgurl: "",
+    OutOfStockQuantity:0
   },
   gocounter() {
     wx.redirectTo({
@@ -21,7 +23,7 @@ Page({
   },
   toinex(){
     wx.redirectTo({
-     url: '/pages/index/index'
+     url: '/pages/index/event/person'
    })
  },
  goout(){
@@ -30,8 +32,38 @@ Page({
  app.globalData.userInfo=null
  
  wx.redirectTo({
-  url: '/pages/index/index'
+  url: '/pages/index/event/person'
 })
+},
+deviceOutOfStockQuantity(){
+  let that=this
+  wx.request({
+
+    url: app.globalData.url + 'vending/foreground/device/OutOfStockQuantity',
+    dataType: 'json',
+    method: "GET",
+    data: {},
+    header: {
+      'msToken': app.globalData.userInfo.token
+    },
+    success(res) {
+      if (res.data.code == 1) {
+      
+        that.setData({
+          OutOfStockQuantity: res.data.data
+        })
+      }  else if(res.statusCode==401) {
+        Toast("登录信息过期,请重新登录")
+        wx.navigateTo({
+          url: '/pages/index/event/login'
+        })
+      }
+      else{
+        Toast(res.statusCode+res.data.message)
+      }
+    }
+  })
+
 },
   /**
    * 生命周期函数--监听页面加载
@@ -44,7 +76,7 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo 
     })
-     
+    this.deviceOutOfStockQuantity() 
   },
 
   /**

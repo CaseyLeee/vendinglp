@@ -18,7 +18,9 @@ Page({
     containerlist:[]
   },
   toinex(){
-    wx.navigateBack()
+    wx.redirectTo({
+      url: '/pages/admin/home'
+     })
   },
   toSearch(){
     console.log("this.data.searchvalue",this.data.searchvalue)
@@ -154,7 +156,7 @@ Page({
           
         } else if(res.statusCode==401) {
           Toast("登录信息过期,请重新登录")
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/index/event/login'
           })
         }
