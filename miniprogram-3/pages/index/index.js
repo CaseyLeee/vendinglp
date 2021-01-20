@@ -273,8 +273,23 @@ Page({
       }
     })
   },
+   
   onLoad: function (options) {
     //蓝牙
+    let  that=this;
+    
+  let ar=[0x00,0x96,0x01,0x02,0x03,0x04,0x05,0x06,0x02,0x00,0x02,0x01,0x01,0x91]
+
+let buffer = new ArrayBuffer(14)
+let dataView = new DataView(buffer)
+ar.map(function(item,index){
+  console.log(index,item)
+  dataView.setUint8(index, item)
+})
+
+
+    console.log( buffer)
+   
     wx.openBluetoothAdapter({//开启蓝牙模块
       success: function (res) {
         console.log('蓝牙已开启!');
@@ -287,7 +302,8 @@ Page({
                   success: function (res) {
                     console.log("getBluetoothDevices",res)
                     if (res.devices[0]) {
-                      console.log(ab2hex(res.devices[0].advertisData))
+                      let deviceId=res.devices[0].deviceId
+                      console.log(res.devices[0])
                          wx.stopBluetoothDevicesDiscovery({
                                   success (res) {
                                     console.log(res)
@@ -306,15 +322,32 @@ Page({
                           deviceId,
                           success (res) {
                             console.log('device services:', res.services)
-                
+                              // let serviceId= res.services
                           wx.getBLEDeviceCharacteristics({
                             // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
                             deviceId,
                             // 这里的 serviceId 需要在 getBLEDeviceServices 接口中获取
-                            serviceId,
+                            "serviceId":"0783B03E-8535-B5A0-7140-A304F013C3B7",
                             success (res) {
                               console.log('device getBLEDeviceCharacteristics:', res.characteristics)
-                                console.log('特征值匹配成功');蓝牙连接成功 
+                                console.log('特征值匹配成功');
+                              
+                                wx.writeBLECharacteristicValue({
+                                  // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+                                  deviceId: deviceId,
+                                  serviceId: "0783B03E-8535-B5A0-7140-A304F013C3B7",
+                                  characteristicId: "0783B03E-8535-B5A0-7140-A304F013C3B9",
+                                  value: buffer,
+                                  success (res) {
+                                    console.log('writeBLECharacteristicValue:', res)
+                                      
+                                  },
+                                  fail: function (e) {
+                                    console.log('writeBLECharacteristicValuefail!',e)
+                                
+                                  }
+                                })
+
                             }
                           })
                           }
@@ -345,7 +378,7 @@ Page({
     //   let deviceId = q.split("=")[1];
     //   app.globalData.deviceId = deviceId 
     // }
-    let that = this
+    // let that = this
     that.setData({
       imgurl:  app.globalData.imgurl
     })
