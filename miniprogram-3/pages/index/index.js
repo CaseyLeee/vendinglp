@@ -63,7 +63,7 @@ Page({
     this.setData({
       showgoon: false
     });
-    
+
     // wx.navigateTo({
     //   url: '/pages/index/order'
     // })
@@ -273,102 +273,119 @@ Page({
       }
     })
   },
-   
+
   onLoad: function (options) {
     //蓝牙
-    let  that=this;
-    
-  let ar=[0x00,0x96,0x01,0x02,0x03,0x04,0x05,0x06,0x02,0x00,0x02,0x01,0x01,0x91]
+    let that = this;
 
-let buffer = new ArrayBuffer(14)
-let dataView = new DataView(buffer)
-ar.map(function(item,index){
-  console.log(index,item)
-  dataView.setUint8(index, item)
-})
+    let ar = [0x00, 0x96, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x02, 0x00, 0x02, 0x01, 0x01, 0x91]
 
+    let buffer = new ArrayBuffer(14)
+    let dataView = new DataView(buffer)
+    ar.map(function (item, index) {
+      console.log(index, item)
+      dataView.setUint8(index, item)
+    })
 
-    console.log( buffer)
-   
-    wx.openBluetoothAdapter({//开启蓝牙模块
+    console.log(buffer)
+    wx.closeBluetoothAdapter({
+      
       success: function (res) {
-        console.log('蓝牙已开启!');
-        wx.getBluetoothAdapterState({//返回的适配器可用
-          success(res) { console.log("getBluetoothAdapterState",res)
-            wx.startBluetoothDevicesDiscovery({//搜索
-              success: function (res) {
-                console.log('startBluetoothDevicesDiscovery success', res)
-                wx.getBluetoothDevices({
+        console.log('蓝牙已关闭!');
+        wx.openBluetoothAdapter({ //开启蓝牙模块
+          success: function (res) {
+            console.log('蓝牙已开启!');
+            wx.getBluetoothAdapterState({ //返回的适配器可用
+              success(res) {
+                console.log("getBluetoothAdapterState", res)
+                wx.startBluetoothDevicesDiscovery({ //搜索
                   success: function (res) {
-                    console.log("getBluetoothDevices",res)
-                    if (res.devices[0]) {
-                      let deviceId=res.devices[0].deviceId
-                      console.log(res.devices[0])
-                         wx.stopBluetoothDevicesDiscovery({
-                                  success (res) {
-                                    console.log(res)
-                                  },
-                                  fail (res) {
-                                    console.log(res)
-                                  }
-                                });
-                    wx.createBLEConnection({
-                      // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
-                      deviceId,
-                      success (res) {
-                        console.log(res)
-                        wx.getBLEDeviceServices({
-                          // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
-                          deviceId,
-                          success (res) {
-                            console.log('device services:', res.services)
-                              // let serviceId= res.services
-                          wx.getBLEDeviceCharacteristics({
-                            // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
-                            deviceId,
-                            // 这里的 serviceId 需要在 getBLEDeviceServices 接口中获取
-                            "serviceId":"0783B03E-8535-B5A0-7140-A304F013C3B7",
-                            success (res) {
-                              console.log('device getBLEDeviceCharacteristics:', res.characteristics)
-                                console.log('特征值匹配成功');
-                              
-                                wx.writeBLECharacteristicValue({
+                    console.log('startBluetoothDevicesDiscovery success', res)
+                    setTimeout(() => {
+                      wx.getBluetoothDevices({
+                        success: function (res) {
+                          console.log("getBluetoothDevices",res)
+                          let have={}
+                          res.devices.forEach((item)=>{
+                           
+                          if( item.name=="00002000177B") {
+                            console.log("getBluetoothDeviceshave",item)
+                            have=item
+                          }
+                          })
+                         
+                          if (have&&have.name) {
+                            let deviceId =have.deviceId
+                            console.log(deviceId)
+                            wx.stopBluetoothDevicesDiscovery({
+                              success(res) {
+                                console.log(res)
+                              },
+                              fail(res) {
+                                console.log(res)
+                              }
+                            });
+                            wx.createBLEConnection({
+                              // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+                              deviceId,
+                              success(res) {
+                                console.log(res)
+                                wx.getBLEDeviceServices({
                                   // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
-                                  deviceId: deviceId,
-                                  serviceId: "0783B03E-8535-B5A0-7140-A304F013C3B7",
-                                  characteristicId: "0783B03E-8535-B5A0-7140-A304F013C3B9",
-                                  value: buffer,
-                                  success (res) {
-                                    console.log('writeBLECharacteristicValue:', res)
-                                      
-                                  },
-                                  fail: function (e) {
-                                    console.log('writeBLECharacteristicValuefail!',e)
-                                
+                                  deviceId,
+                                  success(res) {
+                                    console.log('device services:', res.services)
+                                    // let serviceId= res.services
+                                    wx.getBLEDeviceCharacteristics({
+                                      // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+                                      deviceId,
+                                      // 这里的 serviceId 需要在 getBLEDeviceServices 接口中获取
+                                      "serviceId": "0783B03E-8535-B5A0-7140-A304F013C3B7",
+                                      success(res) {
+                                        console.log('device getBLEDeviceCharacteristics:', res.characteristics)
+                                        console.log('特征值匹配成功');
+  
+                                        wx.writeBLECharacteristicValue({
+                                          // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+                                          deviceId: deviceId,
+                                          serviceId: "0783B03E-8535-B5A0-7140-A304F013C3B7",
+                                          characteristicId: "0783B03E-8535-B5A0-7140-A304F013C3B9",
+                                          value: buffer,
+                                          success(res) {
+                                            console.log('writeBLECharacteristicValue:', res)
+  
+                                          },
+                                          fail: function (e) {
+                                            console.log('writeBLECharacteristicValuefail!', e)
+  
+                                          }
+                                        })
+  
+                                      }
+                                    })
                                   }
                                 })
-
-                            }
-                          })
+                              }
+                            })
                           }
-                        })
-                      }
-                    })
-                    }
+                        }
+                      })
+                    }, 1000);
+                  
+
                   }
-                })
-                
+                });
               }
-            });
-           }
-        })
-        
-      },
-      fail: function (e) {
-        console.log('蓝牙未开启或不支持蓝牙!')
-    
+            })
+
+          },
+          fail: function (e) {
+            console.log('蓝牙未开启或不支持蓝牙!')
+          }
+        });
       }
-    });
+    })
+
     //end
 
     // if (options&&options.q) {//体验版  去小程序管理后台加规则进入
@@ -380,7 +397,7 @@ ar.map(function(item,index){
     // }
     // let that = this
     that.setData({
-      imgurl:  app.globalData.imgurl
+      imgurl: app.globalData.imgurl
     })
     if (app.globalData.deviceId != "") {
       that.showindex()
