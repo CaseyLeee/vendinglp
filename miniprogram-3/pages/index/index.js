@@ -87,12 +87,19 @@ Page({
   },
   toorder() {
     clearInterval(this.data.intervalnumber)
-    wx.navigateTo({
+
+
+    if(app.globalData.userInfo==null){
+       wx.navigateTo({
       url: '/pages/index/event/person'
     })
-    // wx.navigateTo({
-    //   url: '/pages/index/order'
-    // })
+    }
+    else{
+      wx.redirectTo({
+        url: '/pages/admin/home'
+      })
+    }
+
   },
 
   guid() {
@@ -102,7 +109,7 @@ Page({
     return S4() + S4() + S4() + S4() + S4() + S4() + S4() + S4();
   },
   onSubmit(e) {
-    console.log(this.data.number)
+  
     this.setData({
       show: false
     });
@@ -154,7 +161,9 @@ Page({
                     'paySign': res.data.data.paySign,
                     'success': function (res) {
                       Toast('支付成功,请取出商品');
-
+                      //blestart
+                        // that.bleoper(that.data.goodschoose.number)
+                      //end
                       that.onLoad();
                     },
                     'fail': function (res) {
@@ -180,7 +189,8 @@ Page({
                   })
                 }
               } else {
-                Toast(res.data.message);
+                // that.bleoper(that.data.goodschoose.number)
+                Toast("失败:" + res.data.message);
               }
             }
           })
@@ -273,23 +283,32 @@ Page({
       }
     })
   },
+  connect(item, deviceId) {
+    wx.writeBLECharacteristicValue({
+      // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
+      deviceId: deviceId,
+      serviceId: "0783B03E-8535-B5A0-7140-A304F013C3B7",
+      characteristicId: "0783B03E-8535-B5A0-7140-A304F013C3B9",
+      value: item,
+      success(res) {
+        console.log('writeBLECharacteristicValue:', res)
 
-  onLoad: function (options) {
-    //蓝牙
-    let that = this;
+      },
+      fail: function (e) {
+        console.log('writeBLECharacteristicValuefail!', e)
 
-    let ar = [0x00, 0x96, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x02, 0x00, 0x02, 0x01, 0x01, 0x91]
-
-    let buffer = new ArrayBuffer(14)
-    let dataView = new DataView(buffer)
-    ar.map(function (item, index) {
-      console.log(index, item)
-      dataView.setUint8(index, item)
+      }
     })
-
-    console.log(buffer)
+  },
+  bleoper(number) {
+    //蓝牙
+    
+    let that = this;
+    
+    let item= app.globalData.arrbuffer[number-3]
+    console.log(item)
     wx.closeBluetoothAdapter({
-      
+
       success: function (res) {
         console.log('蓝牙已关闭!');
         wx.openBluetoothAdapter({ //开启蓝牙模块
@@ -304,18 +323,18 @@ Page({
                     setTimeout(() => {
                       wx.getBluetoothDevices({
                         success: function (res) {
-                          console.log("getBluetoothDevices",res)
-                          let have={}
-                          res.devices.forEach((item)=>{
-                           
-                          if( item.name=="00002000177B") {
-                            console.log("getBluetoothDeviceshave",item)
-                            have=item
-                          }
+                          console.log("getBluetoothDevices", res)
+                          let have = {}
+                          res.devices.forEach((item) => {
+
+                            if (item.name == "00002000177B") {
+                              console.log("getBluetoothDeviceshave", item)
+                              have = item
+                            }
                           })
-                         
-                          if (have&&have.name) {
-                            let deviceId =have.deviceId
+
+                          if (have && have.name) {
+                            let deviceId = have.deviceId
                             console.log(deviceId)
                             wx.stopBluetoothDevicesDiscovery({
                               success(res) {
@@ -344,50 +363,62 @@ Page({
                                       success(res) {
                                         console.log('device getBLEDeviceCharacteristics:', res.characteristics)
                                         console.log('特征值匹配成功');
-  
-                                        wx.writeBLECharacteristicValue({
-                                          // 这里的 deviceId 需要已经通过 createBLEConnection 与对应设备建立链接
-                                          deviceId: deviceId,
-                                          serviceId: "0783B03E-8535-B5A0-7140-A304F013C3B7",
-                                          characteristicId: "0783B03E-8535-B5A0-7140-A304F013C3B9",
-                                          value: buffer,
-                                          success(res) {
-                                            console.log('writeBLECharacteristicValue:', res)
-  
-                                          },
-                                          fail: function (e) {
-                                            console.log('writeBLECharacteristicValuefail!', e)
-  
-                                          }
-                                        })
-  
+                                        that.connect(item, deviceId)
+                                        // arrbuffer.map(async (item) => {
+                                        //   await that.connect(item, deviceId)
+                                        // })
+
+
                                       }
                                     })
                                   }
                                 })
+                              },
+                              fail: function (e) {
+                                Toast("与蓝牙建立连接失败");
+
                               }
                             })
+                          } else {
+                            Toast("未找到对应的蓝牙设备");
                           }
+                        },
+                        fail: function (e) {
+                          Toast("获取蓝牙设备失败");
+
                         }
                       })
                     }, 1000);
-                  
+
+
+                  },
+                  fail: function (e) {
+                    Toast("搜索蓝牙失败");
 
                   }
                 });
+              },
+              fail: function (e) {
+                Toast("蓝牙适配器不可用");
+
               }
             })
 
           },
           fail: function (e) {
-            console.log('蓝牙未开启或不支持蓝牙!')
+            Toast("蓝牙未开启或不支持蓝牙!");
+
           }
         });
       }
     })
 
     //end
+  },
+  onLoad: function (options) {
 
+
+    let that = this;
     // if (options&&options.q) {//体验版  去小程序管理后台加规则进入
 
     //   let q = decodeURIComponent(options.q); 
@@ -399,6 +430,7 @@ Page({
     that.setData({
       imgurl: app.globalData.imgurl
     })
+    console.log("indexjsccc", app.globalData.url)
     if (app.globalData.deviceId != "") {
       that.showindex()
       app.deviceisOnline()
@@ -408,6 +440,7 @@ Page({
         app.deviceisOnline()
       }
     }
+    app.bleoper=this.bleoper
 
   }
 })

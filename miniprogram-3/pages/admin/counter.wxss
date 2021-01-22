@@ -24,7 +24,7 @@
   flex: 2;
 }
 .head{
-  margin-top: 145rpx;
+  margin-top: 175rpx;
   display: flex;
   justify-content: space-around;
   font-weight: 600;

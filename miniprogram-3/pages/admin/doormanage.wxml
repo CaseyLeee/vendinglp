@@ -1,7 +1,7 @@
 <van-nav-bar title="补货" style="width: 100%;position:fixed;top: 0;">
   <van-icon name="arrow-left" slot="left" size="60rpx" bindtap="toinex" />
 </van-nav-bar>
-<view style="margin-top:145rpx">
+<view style="margin-top:175rpx">
   <van-search  model:value="{{searchvalue}}" placeholder="请输入搜索关键词" bind:search="toSearch" />
 </view>
 <view>
@@ -17,7 +17,7 @@
       <view class="circlecon">
         <view wx:for="{{item.containerlist}}" wx:key="containerId" wx:for-item="con"
           class=" circle,{{item.containerState[con.number - 1] == 0 ? 'need' : ''}}"
-           data-deviceid="{{item.deviceId}}" data-number="{{con.number}}" bindtap="showpop"
+           data-deviceid="{{item.deviceId}}" data-number="{{con.number}}" data-containerstate="{{item.containerState}}"  bindtap="showpop"
           >
           <image class="img" wx:if="{{con.commodify.pircture}}" src="{{imgurl+con.commodify.pircture}}"
              lazy-load="{{true}}">
@@ -34,9 +34,9 @@
 <van-dialog id="van-dialog" />
 <van-popup show="{{ show }}" bind:close="onClose" position="bottom" round custom-style="height: 20%;">
   <view class="pop">
-    <van-button type="primary" bindtap="openconfirm" >补货</van-button>
+    <van-button type="primary" data-oper="{{1}}" bindtap="openconfirm" >补货</van-button>
     <van-button type="warning" bindtap="devicecomand" >开门</van-button>
-    <van-button type="info" bindtap="stockout" >缺货</van-button>
+    <van-button type="info" data-oper="{{0}}" bindtap="openconfirm" >缺货</van-button>
   </view>
 
 </van-popup>

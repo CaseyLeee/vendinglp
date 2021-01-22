@@ -14,22 +14,27 @@
   </view>
   <view class="butn">
 
-    <view class="butnitem" bindtap="godoormg">
+    <!-- <view class="butnitem" bindtap="godoormg">
       待补货柜({{OutOfStockQuantity}})
-    </view>
+    </view> -->
 
-    <view class="butnitem butnitemnobr">
-      今日销售
-    </view>
+    <!-- <view class="butnitem butnitemnobr">
+      今日销售({{selltoday}})
+    </view> -->
 
   </view>
 </view>
 
 <view class="oper">
   <van-divider />
-  <view bindtap="gocounter">货柜管理</view>
+  <view bindtap="godoormg">待补货柜({{OutOfStockQuantity}})</view>
   <van-divider />
-  <view>销售数据</view>
+  <view>今日收益({{selltoday}})</view>
+  <van-divider />
+</view>
+<view class="oper">
+  <van-divider/>
+  <view bindtap="gocounter">货柜管理</view>
   <van-divider />
 </view>
 <van-toast id="van-toast" />

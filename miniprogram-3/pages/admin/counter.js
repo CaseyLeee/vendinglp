@@ -12,7 +12,7 @@ Page({
     counterlist: [],
   },
 del(e){
-  let id = e.currentTarget.dataset.id
+  let id = e.currentTarget.dataset.deviceid
   let that=this
   Dialog.confirm({
     title: '删除',

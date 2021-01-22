@@ -35,7 +35,7 @@
 
     <van-button type="primary" size="mini" type="primary" data-item="{{item}}"  bindtap="edit" >编辑</van-button>
 
-    <van-button style="margin-top:10rpx" type="warning" size="mini"  data-id="{{item.identifyId}}" bindtap="del" >删除</van-button>
+    <van-button style="margin-top:10rpx" type="warning" size="mini"  data-deviceid="{{item.deviceId}}" bindtap="del" >删除</van-button>
   </view>
 </view>
 <van-toast id="van-toast" />
