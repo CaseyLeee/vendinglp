@@ -6,7 +6,7 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
   data: {
     name: "",
-    intervalnumber: null,
+
     showdialog: false,
 
     imgurl: "",
@@ -86,15 +86,16 @@ Page({
     });
   },
   toorder() {
-    clearInterval(this.data.intervalnumber)
+    clearInterval(app.globalData.intervalnumber)
+    app.globalData.intervalnumber = null
+    
+    console.log("toorder", app.globalData.intervalnumber)
 
-
-    if(app.globalData.userInfo==null){
-       wx.navigateTo({
-      url: '/pages/index/event/person'
-    })
-    }
-    else{
+    if (app.globalData.userInfo == null) {
+      wx.navigateTo({
+        url: '/pages/index/event/person'
+      })
+    } else {
       wx.redirectTo({
         url: '/pages/admin/home'
       })
@@ -109,7 +110,7 @@ Page({
     return S4() + S4() + S4() + S4() + S4() + S4() + S4() + S4();
   },
   onSubmit(e) {
-  
+
     this.setData({
       show: false
     });
@@ -122,8 +123,9 @@ Page({
         });
       }
 
-
-      if (that.data.goodschoose.available == 0 && that.data.goodschoose.number != 1 && that.data.goodschoose.number != 2) {
+      if (!app.globalData.isonline) {
+        Toast('设备不在线');
+      } else if (that.data.goodschoose.available == 0 && that.data.goodschoose.number != 1 && that.data.goodschoose.number != 2) {
         // console.log(that.data.goodschoose)
         Toast('此商品暂时无货');
 
@@ -153,40 +155,46 @@ Page({
                 if ((that.data.goodschoose.number == 1 || that.data.goodschoose.number == 1) && that.data.goodschoose.typeId == 1) {
                   Toast('支付成功,您可以使用此功能啦');
                 } else {
-                  wx.requestPayment({
-                    'timeStamp': res.data.data.timeStamp.toString(),
-                    'nonceStr': res.data.data.nonceStr,
-                    'package': res.data.data._package,
-                    'signType': res.data.data.signType,
-                    'paySign': res.data.data.paySign,
-                    'success': function (res) {
-                      Toast('支付成功,请取出商品');
-                      //blestart
+                  console.log(app.globalData.url.indexOf("https://iim.ltd") == -1)
+                  if (app.globalData.url.indexOf("https://iim.ltd") == -1) {
+                    wx.requestPayment({
+                      'timeStamp': res.data.data.timeStamp.toString(),
+                      'nonceStr': res.data.data.nonceStr,
+                      'package': res.data.data._package,
+                      'signType': res.data.data.signType,
+                      'paySign': res.data.data.paySign,
+                      'success': function (res) {
+                        Toast('支付成功,请取出商品');
+                        //blestart
                         // that.bleoper(that.data.goodschoose.number)
-                      //end
-                      that.onLoad();
-                    },
-                    'fail': function (res) {
-                      if (res.errMsg.indexOf("cancel") > 0) {
-                        //调用订单取消接口
-                        wx.request({
-                          url: app.globalData.url + 'vending/public/order/cancelOrder',
-                          data: {
-                            orderId: param.orderId
-                          },
-                          method: "GET",
-                          success(res) {
+                        //end
+                        that.onLoad();
+                      },
+                      'fail': function (res) {
+                        if (res.errMsg.indexOf("cancel") > 0) {
+                          //调用订单取消接口
+                          wx.request({
+                            url: app.globalData.url + 'vending/public/order/cancelOrder',
+                            data: {
+                              orderId: param.orderId
+                            },
+                            method: "GET",
+                            success(res) {
 
-                            if (res.data.code == 1) {
-                              Toast('取消订单成功');
+                              if (res.data.code == 1) {
+                                Toast('取消订单成功');
+                              }
                             }
-                          }
-                        })
+                          })
 
-                      }
-                    },
-                    'complete': function (res) {}
-                  })
+                        }
+                      },
+                      'complete': function (res) {}
+                    })
+                  } else {
+                    Toast('支付成功,请取货');
+                  }
+
                 }
               } else {
                 // that.bleoper(that.data.goodschoose.number)
@@ -302,10 +310,10 @@ Page({
   },
   bleoper(number) {
     //蓝牙
-    
+
     let that = this;
-    
-    let item= app.globalData.arrbuffer[number-3]
+
+    let item = app.globalData.arrbuffer[number - 3]
     console.log(item)
     wx.closeBluetoothAdapter({
 
@@ -417,7 +425,6 @@ Page({
   },
   onLoad: function (options) {
 
-
     let that = this;
     // if (options&&options.q) {//体验版  去小程序管理后台加规则进入
 
@@ -433,14 +440,14 @@ Page({
     console.log("indexjsccc", app.globalData.url)
     if (app.globalData.deviceId != "") {
       that.showindex()
-      app.deviceisOnline()
+      app.tointervalnumber()
     } else {
       app.getdecid = () => {
         this.showindex()
-        app.deviceisOnline()
+        app.tointervalnumber()
       }
     }
-    app.bleoper=this.bleoper
+    app.bleoper = this.bleoper
 
   }
 })

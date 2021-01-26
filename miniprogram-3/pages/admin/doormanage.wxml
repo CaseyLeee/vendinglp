@@ -10,7 +10,7 @@
 
       <view>{{ item.name }}{{ item.online ? "" : "(离线)" }}</view>
       <view class="allopen">
-        <van-button type="info" size="small" bindtap="allopen" data-deviceid="{{item.deviceId}}">仓门全开</van-button>
+        <van-button type="info" size="small" bindtap="allopen" data-deviceid="{{item.deviceId}}" class="{{item.online ? '' : 'greybt'}}" >仓门全开</van-button>
       </view>
       <!-- data-一定要小写 -->
 

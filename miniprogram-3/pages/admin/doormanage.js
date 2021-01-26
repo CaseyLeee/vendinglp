@@ -15,7 +15,11 @@ Page({
     imgurl: "",
     counterlist: [],
     containerlist: [],
-    containerState: ""
+    containerState: "",
+    page: 0, //当前页
+    pages: 2, //每页条数
+    total: 0, //总条数
+    totalPages:0
   },
   toinex() {
     wx.redirectTo({
@@ -41,7 +45,7 @@ Page({
     this.setData({
       number: e.currentTarget.dataset.number
     });
-  
+
     this.setData({
       containerState: e.currentTarget.dataset.containerstate
     });
@@ -52,12 +56,54 @@ Page({
       show: false
     });
   },
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    //下拉刷新,重新初始化,isMerge = false
+    this.querycounterlist();
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+    this.setPage();
+  },
+  /**
+ * method:分页加载控制函数
+ * 
+ */
+ setPage() {
+   let that=this
+  const {
+      page,
+      pages,
+      total
+  } = that.data;
+
+
+  const value =Math.ceil(total / pages);
+ 
+that.setData({
+  totalPages:value
+})
+
+  if (page >= that.data.totalPages || that.isLoading) {
+      //控制触底是否加载需要两个条件,满足一下两个条件,都不能调用请求函数
+      // 1.当前页是最后一页,
+      // 2. 正在加载中
+      return
+  }
+  //分页加载需要传递isMerge=true参数,表示需要合并到原来的数组上
+  this.querycounterlist(true);
+},
   openconfirm(e) {
     let oper = e.currentTarget.dataset.oper
     var that = this;
     let containerState = that.data.containerState;
     let number = that.data.number;
-    
+
     let arr = containerState.split('')
 
     if (oper == 0) {
@@ -65,7 +111,7 @@ Page({
     } else if (oper == 1) {
       arr[number - 1] = "1"
     }
-   
+
     containerState = arr.toString().replace(/,/g, '')
     console.log("containerState", containerState)
     let data = {
@@ -93,7 +139,7 @@ Page({
           that.setData({
             show: false
           });
-          await that.querycontainerlist()
+        
           await that.querycounterlist()
 
         } else {
@@ -164,13 +210,25 @@ Page({
       imgurl: app.globalData.imgurl
     })
     await that.querycontainerlist()
-   
+
 
   },
-  querycounterlist() {
+  querycounterlist(isMerge) {
     var that = this;
+    that.isLoading = true
+    wx.showLoading({
+        title: '加载中',
+    })
+    
     let data = {}
+    that.data.page= Number(that.data.page) + 1;
+    data.pageNum = that.data.page;
+    if(!isMerge){
+        //不合并,页码需要重新设置为1
+        data.pageNum = 1;
+    }
 
+    data.pageSize=2
     if (that.data.searchvalue != "") {
       data.name = that.data.searchvalue
     }
@@ -186,13 +244,23 @@ Page({
       success(res) {
         if (res.data.code == 1) {
           console.log("counterlist", res.data.data)
+         
           res.data.data.map(function (item) {
             item.containerlist = that.data.containerlist.filter(function (data) {
               return data.number != 1 && data.number != 2;
             })
           })
+
+          let shop = that.data.counterlist;
+          if (!isMerge) {
+            //不合并,shop需要初始化
+            shop = [];
+        }
+        shop = shop.concat(res.data.data)||[];
+
           that.setData({
-            counterlist: res.data.data
+            counterlist: shop,
+            total: res.data.totalNum
           })
 
         } else if (res.statusCode == 401) {
@@ -203,10 +271,17 @@ Page({
         } else {
           Toast(res.statusCode + res.data.message)
         }
-      }
+      },
+      complete:function(){
+        that.isLoading = false
+        wx.stopPullDownRefresh();
+        setTimeout(function(){
+            wx.hideLoading()
+        },500)
+    }
     })
   },
-   querycontainerlist() {
+  querycontainerlist() {
     var that = this;
     wx.request({
 
@@ -260,19 +335,7 @@ Page({
 
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
+ 
 
   /**
    * 用户点击右上角分享
