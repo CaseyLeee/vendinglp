@@ -17,15 +17,15 @@ Page({
   toinex() {
     wx.redirectTo({
       url: '/pages/index/event/person'
-     })
+    })
   },
   login() {
     let that = this
-    if(that.data.username==""||that.data.password==""){
+    if (that.data.username == "" || that.data.password == "") {
       Toast('账号和密码不能为空');
       return;
     }
-   
+
     wx.request({
 
       url: app.globalData.url + 'vending/user/login',
@@ -39,18 +39,17 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success(res) {
-        if(res.data.code==1){
+        if (res.data.code == 1) {
           wx.redirectTo({
             url: '/pages/admin/home'
           })
-          app.globalData.userInfo=res.data.data
-          app.globalData.userInfo.token=res.data.message
+          app.globalData.userInfo = res.data.data
+          app.globalData.userInfo.token = res.data.message
           wx.setStorageSync('userInfo', app.globalData.userInfo)
+        } else {
+          Toast(res.statusCode + res.data.message)
         }
-        else{
-          Toast(res.data.message);
-        }
-        
+
       }
     })
 

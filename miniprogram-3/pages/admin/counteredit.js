@@ -53,8 +53,13 @@ Page({
             url: '/pages/admin/counter'
           })
 
+        } else if (res.statusCode == 401) {
+          Toast("登录信息过期,请重新登录")
+          wx.redirectTo({
+            url: '/pages/index/event/login'
+          })
         } else {
-          Toast(res.data.message);
+          Toast(res.statusCode + res.data.message)
         }
 
       }

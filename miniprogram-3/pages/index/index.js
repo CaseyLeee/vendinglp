@@ -87,7 +87,7 @@ Page({
   },
   toorder() {
     clearInterval(app.globalData.intervalnumber)
-    app.globalData.intervalnumber = null
+    app.globalData.intervalnumber = null//必须加null 不能光 clear
     
     console.log("toorder", app.globalData.intervalnumber)
 
@@ -115,6 +115,7 @@ Page({
       show: false
     });
     let that = this;
+    
     if (app.globalData.openid != null) {
       if (e.currentTarget.dataset.item != "to1and2") {
 
@@ -122,7 +123,13 @@ Page({
           goodschoose: e.currentTarget.dataset.item
         });
       }
-
+      //数量置为1
+      if(that.data.goodschoose.number != 1 && that.data.goodschoose.number != 2){
+        that.setData({
+          number: 1
+        });
+      }
+      console.log( that.data.number)
       if (!app.globalData.isonline) {
         Toast('设备不在线');
       } else if (that.data.goodschoose.available == 0 && that.data.goodschoose.number != 1 && that.data.goodschoose.number != 2) {
