@@ -1,13 +1,6 @@
 {
   "usingComponents": {
-    "van-nav-bar": "@vant/weapp/nav-bar/index",
-    "van-toast": "@vant/weapp/toast/index",
-    "van-button": "@vant/weapp/button/index",
-    "van-divider": "@vant/weapp/divider/index",
-    "van-icon": "@vant/weapp/icon/index",
-    "van-dialog": "@vant/weapp/dialog/index",
-    "van-search": "@vant/weapp/search/index",
-    "van-popup": "@vant/weapp/popup/index"
+
   },
   "onReachBottomDistance":200,
   "enablePullDownRefresh": true

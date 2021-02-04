@@ -29,7 +29,7 @@
   <van-divider />
   <view bindtap="godoormg">待补货柜({{OutOfStockQuantity}})</view>
   <van-divider />
-  <view>今日收益({{selltoday}})</view>
+  <view>今日收益(￥{{selltoday}})</view>
   <van-divider />
 </view>
 <view class="oper">

@@ -8,7 +8,8 @@
     "pages/admin/home",
     "pages/admin/counter",
     "pages/admin/counteredit",
-    "pages/admin/doormanage"
+    "pages/admin/doormanage",
+    "pages/index/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,5 +18,22 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+   
+    "van-stepper": "@vant/weapp/stepper/index",
+    "van-submit-bar": "@vant/weapp/submit-bar/index", 
+    "van-notify": "@vant/weapp/notify/index",
+    "van-search": "@vant/weapp/search/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-toast": "@vant/weapp/toast/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-dialog": "@vant/weapp/dialog/index"
+  }
 }

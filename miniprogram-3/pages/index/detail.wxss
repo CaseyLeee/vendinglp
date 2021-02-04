@@ -1,0 +1,13 @@
+/* pages/index/detail.wxss */
+.mar{
+  margin-top: 175rpx;
+}
+.cen{
+
+  margin-top: 200rpx;
+  color: #4C4C4C;
+  font-size: 36rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

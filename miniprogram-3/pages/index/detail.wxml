@@ -1,0 +1,16 @@
+<van-nav-bar title="详情" style="width: 100%;position:fixed;top: 0;">
+  <van-icon name="arrow-left" slot="left" size="50rpx" color="#0099CC" bindtap="toinex" />
+</van-nav-bar>
+
+<view wx:if="{{detailsPic.length>0}}" class="mar">
+      <view wx:for="{{detailsPic}}" wx:key="item">
+              <image src="{{imgurl+item}}" alt="" mode="widthFix" style="width: 100%;"></image>
+      </view>
+</view>
+<view wx:else  class="mar cen">
+  <van-icon name="bullhorn-o" />
+     <view>
+      无详情数据
+     </view> 
+    
+</view>
