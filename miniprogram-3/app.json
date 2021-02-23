@@ -9,7 +9,8 @@
     "pages/admin/counter",
     "pages/admin/counteredit",
     "pages/admin/doormanage",
-    "pages/index/detail"
+    "pages/index/detail",
+    "pages/admin/admimorder"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -20,9 +21,8 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-   
     "van-stepper": "@vant/weapp/stepper/index",
-    "van-submit-bar": "@vant/weapp/submit-bar/index", 
+    "van-submit-bar": "@vant/weapp/submit-bar/index",
     "van-notify": "@vant/weapp/notify/index",
     "van-search": "@vant/weapp/search/index",
     "van-popup": "@vant/weapp/popup/index",

@@ -11,10 +11,15 @@
 .panel{
   /* background-color: #E3E3E3; */
   padding-top: 175rpx;
+  background-image: linear-gradient(#97CBFF, #007dea);
 }
 .useravatar {
   display: flex;
   align-items: center;
+}
+.font12{
+  font-size:26rpx ;
+  
 }
 
 .avatar {
@@ -29,25 +34,78 @@
 .butn{
   display: flex;
   padding: 30rpx;
+  padding-top: 50rpx;
 }
+
 .oper{
-  margin: 30rpx;
+  background-color: #f4f4f4;
+ 
   font-weight: 600;
   color: #333333;
   font-size: 26rpx;
-  padding-bottom: 20rpx;
+
+  padding: 1rpx 40rpx 40rpx 40rpx;
+ 
 }
 .butnitem{
-  
-  height: 90rpx;
+
   width: 100%;
-  line-height: 90rpx;
   box-sizing: border-box;
   text-align: center;
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #666666;
+  font-size: 60rpx;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
 }
 .butnitemnobr{
-  border-left:2rpx solid #666666;
+  border-left:2rpx solid white;
+}
+.font14{
+  font-size: 30rpx;
+}
+.font15{
+  font-size: 32rpx;
+}
+.grey{
+  color:#9b9b9b ;
+  font-weight: 400;
+}
+.item{
+display: flex;
+align-items: center;
+height: 100rpx;
+background-color: white;
+padding: 40rpx 20rpx;
+margin-top: 30rpx;
+ 
+}
+.itemimg{
+  flex: 2;
+}
+.itemword{
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+}
+.itemnumber{
+  flex: 1;
+  color:#9b9b9b ;
+  text-align: center;
+  font-weight: 400;
+}
+.cir{
+  background-color: #ff545c;
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50%;
+    line-height: 50rpx;
+    color: white;
+   
+    margin-left: calc(50% - 25rpx);
+}
+.itemicon{
+  flex: 1;
+  text-align: center;
 }

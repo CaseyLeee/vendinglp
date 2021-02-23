@@ -9,8 +9,9 @@ Page({
   data: {
     userInfo:{},
     imgurl: "",
-    OutOfStockQuantity:0,
-    selltoday:0
+    account:0,
+    selltoday:0,
+    counterlg:0
   },
   gocounter() {
     wx.redirectTo({
@@ -26,6 +27,11 @@ Page({
     wx.redirectTo({
      url: '/pages/index/index'
    })
+ },
+ goadminorder(){
+  wx.redirectTo({
+    url: '/pages/admin/admimorder'
+  })
  },
  goout(){
  //清除缓存内的用户信息
@@ -66,7 +72,37 @@ deviceOutOfStockQuantity(){
   })
 
 },
+querycounter(){
+  var that = this;
 
+    wx.request({
+
+      url: app.globalData.url + 'vending/foreground/device/list',
+      dataType: 'json',
+      method: "POST",
+      data: {},
+      header: {
+        'msToken': app.globalData.userInfo.token
+      },
+      success(res) {
+        if (res.data.code == 1) {
+        
+          that.setData({
+            counterlg: res.data.data.length
+          })
+        }
+        else if (res.statusCode == 401) {
+          Toast("登录信息过期,请重新登录")
+          wx.redirectTo({
+            url: '/pages/index/event/login'
+          })
+        } else {
+          Toast(res.statusCode + res.data.message)
+        }
+
+      }
+    })
+},
 ordertodaySales(){
   let that=this
   wx.request({
@@ -84,9 +120,10 @@ ordertodaySales(){
     success(res) {
      
       if (res.data.code == 1) {
-      
+        console.log(res.data.data)
         that.setData({
-          selltoday: res.data.data/100
+          selltoday: res.data.data.toDayMoney/100,
+          account:res.data.data.account/100
         })
       }  else if(res.statusCode==401) {
         Toast("登录信息过期,请重新登录")
@@ -113,8 +150,9 @@ ordertodaySales(){
     this.setData({
       userInfo: app.globalData.userInfo 
     })
-    this.deviceOutOfStockQuantity() 
+     this.deviceOutOfStockQuantity() 
      this.ordertodaySales()
+     this.querycounter()
   },
 
   /**

@@ -1,0 +1,37 @@
+<van-nav-bar title="" style="width: 100%;position:fixed;top: 0;">
+  <van-icon name="arrow-left" slot="left" size="60rpx" bindtap="toinex" />
+</van-nav-bar>
+<view class="head">
+  <view class="flex1 headfx">
+    时间
+  </view>
+  <view class="flex1 headfx">
+    商品
+  </view>
+  <view class="flex1 headfx">
+    货柜
+  </view>
+  <view class="flex1 headfx">
+    金额(元)
+  </view>
+  <!-- <view class="flex1">
+    提成(元)
+  </view> -->
+</view>
+<view  wx:for="{{list}}" wx:key="orderId" class="tablebodyitem">
+  <view class="flex1" style="font-size: 20rpx;">
+    {{item.createTime}}
+  </view>
+  <view class="flex1">
+    {{item.commodifyName}}
+  </view>
+  <view class="flex1">
+    {{item.deviceId}}
+  </view>
+  <view class="flex1">
+    {{item.totalPrice/100}}
+  </view>
+ 
+</view>
+<van-toast id="van-toast" />
+<van-dialog id="van-dialog" />

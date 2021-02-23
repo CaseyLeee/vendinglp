@@ -230,10 +230,10 @@ console.log("that.globalData.intervalnumber````",that.globalData.intervalnumber 
     }
   },
   globalData: {
-    //url:"https://www.iimiim.cn/",
-    //imgurl:"https://www.iimiim.cn/",
-    url: "https://iim.ltd/",
-    imgurl: "https://iim.ltd",
+    url:"https://www.iimiim.cn/",
+    imgurl:"https://www.iimiim.cn/",
+    //url: "https://iim.ltd/",
+    //imgurl: "https://iim.ltd",
     userInfo: null,
     openid: "",
     containList: [],

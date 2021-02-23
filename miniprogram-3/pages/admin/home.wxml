@@ -10,31 +10,97 @@
 
     </view>
 
-    <van-button size="small" type="danger" bindtap="goout">退出</van-button>
+    <van-button size="small" style="backgroud:#ECF5FF" bindtap="goout">退出</van-button>
   </view>
   <view class="butn">
 
-    <!-- <view class="butnitem" bindtap="godoormg">
-      待补货柜({{OutOfStockQuantity}})
-    </view> -->
+    <view class="butnitem" bindtap="godoormg">
+      <view>
+        <text class="font14">￥</text>{{selltoday}}
+      </view>
+      <view class="font12">
+        今日销售提成
+      </view>
 
-    <!-- <view class="butnitem butnitemnobr">
-      今日销售({{selltoday}})
-    </view> -->
+    </view>
+
+    <view class="butnitem butnitemnobr">
+      <view>
+        <text class="font14">￥</text>{{account}}
+      </view>
+      <view class="font12">
+        可提现余额
+      </view>
+
+    </view>
 
   </view>
 </view>
 
 <view class="oper">
-  <van-divider />
-  <view bindtap="godoormg">待补货柜({{OutOfStockQuantity}})</view>
-  <van-divider />
-  <view>今日收益(￥{{selltoday}})</view>
-  <van-divider />
+
+  <view bindtap="godoormg" class="item">
+
+    <image style="height: 100rpx;" class="itemimg" mode="aspectFit" src="../../images/bh.png"></image>
+
+    <view class="itemword">
+      <view class="font15">
+        补货告警
+      </view>
+      <view class="font12  grey">
+        补货即时提示,省时省力
+      </view>
+
+    </view>
+    <view class="itemnumber">
+      <view class="cir">
+        {{OutOfStockQuantity}}
+      </view>
+     
+    </view>
+    <view class="itemicon">
+      <van-icon name="arrow" />
+    </view>
+
+  </view>
+
+  <view bindtap="gocounter" class="item">
+
+    <image style="height: 100rpx;" class="itemimg" mode="aspectFit" src="../../images/hg.png"></image>
+
+    <view class="itemword">
+
+      <view class="font15">
+        货柜数量
+      </view>
+      <view class="font12  grey">
+        货柜数量信息
+      </view>
+    </view>
+    <view class="itemnumber">
+      {{counterlg}}
+    </view>
+    <view class="itemicon">
+      <van-icon name="arrow" />
+    </view>
+  </view>
+  <view bindtap="goadminorder" class="item">
+
+    <image style="height: 100rpx;" class="itemimg" mode="aspectFit" src="../../images/dd.png"></image>
+
+    <view class="itemword">
+      订单数据
+    </view>
+    <view class="itemnumber">
+      
+    </view>
+    <view class="itemicon">
+      <van-icon name="arrow" />
+    </view>
+  </view>
 </view>
-<view class="oper">
-  <van-divider/>
-  <view bindtap="gocounter">货柜管理</view>
-  <van-divider />
-</view>
+
+
+
+
 <van-toast id="van-toast" />

@@ -1,0 +1,35 @@
+
+
+
+.tablebodyitem{
+  display: flex;
+  justify-content: space-around;
+  border-top: solid 1rpx #ebedf0;
+  align-items: center;
+}
+.oper{
+  display: flex;
+  flex-direction: column;
+}
+.flex1{
+  flex: 1;
+  margin: 10rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #5C5C5C;
+  font-weight: 500;
+  flex: 1;
+}
+.flex2{
+  flex: 2;
+}
+.head{
+  margin-top: 175rpx;
+  display: flex;
+  justify-content: space-around;
+  font-weight: 600;
+}
+.headfx{
+  font-size: 30rpx;
+  font-weight: 600;
+}
