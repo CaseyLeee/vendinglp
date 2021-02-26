@@ -27,7 +27,7 @@ toinex(){
 
     wx.request({
 
-      url: app.globalData.url + 'vending/foreground/order/query',
+      url: app.globalData.url + 'vending/foreground/turnover/query',
       dataType: 'json',
       method: "POST",
       data: {},

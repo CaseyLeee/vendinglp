@@ -14,22 +14,25 @@
   <view class="flex1 headfx">
     金额(元)
   </view>
-  <!-- <view class="flex1">
+  <view class="flex1">
     提成(元)
-  </view> -->
+  </view>
 </view>
 <view  wx:for="{{list}}" wx:key="orderId" class="tablebodyitem">
   <view class="flex1" style="font-size: 20rpx;">
     {{item.createTime}}
   </view>
   <view class="flex1">
-    {{item.commodifyName}}
+    {{item.order.commodifyName}}
   </view>
   <view class="flex1">
-    {{item.deviceId}}
+    {{item.order.deviceId}}
   </view>
   <view class="flex1">
-    {{item.totalPrice/100}}
+    {{item.order.totalPrice/100}}
+  </view>
+  <view class="flex1">
+    {{item.order.totalPrice*item.rate/100}}
   </view>
  
 </view>

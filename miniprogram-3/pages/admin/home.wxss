@@ -61,6 +61,8 @@
 }
 .butnitemnobr{
   border-left:2rpx solid white;
+ 
+  border-image: linear-gradient(transparent, rgba(200, 220, 201, 1), transparent) 5 5;
 }
 .font14{
   font-size: 30rpx;
