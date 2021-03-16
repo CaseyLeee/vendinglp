@@ -1,0 +1,16 @@
+<van-nav-bar title="首页" style="width: 100%;position:fixed;top: 0;z-index: 10;">
+  <van-icon name="smile-o" slot="left" size="60rpx" bindtap="toinex"/>
+</van-nav-bar>
+
+
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" controls="{{controls}}"
+  bindcontroltap="controltap" markers="{{markers}}" circles="{{circles}}" bindmarkertap="onClickShow"
+  polyline="{{polyline}}" bindregionchange="regionchange" show-location
+  style="width: 100%; height: {{view.Height}}px;">
+  </map>
+  <cover-view class="btn">扫码取物</cover-view>
+  <van-overlay show="{{ show }}" bind:click="onClickHide">
+  <view class="wrapper">
+    <view class="block" >dec</view>
+  </view>
+</van-overlay>
